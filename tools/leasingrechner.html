@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leasingrechner – Abschlusswerkstatt</title>
+<meta name="description" content="IFRS-16-Leasingrechner für Leasingnehmer mit Zugangsbewertung, Tilgungsplan, Buchungssätzen und Fälligkeitsanalyse. Rechnet in Ihrem Browser.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/host-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+/* Leasingrechner: links der Eingabebogen, rechts der Ergebnisbogen mit Registern; Summen doppelt unterstrichen. */
+:root {
+  --bg: #000;
+  --surface: #161615;
+  --surface-2: #242422;
+  --fg: #f1efe9;
+  --muted: #9a9893;
+  --line: #2e2e2b;
+  --accent: #f1efe9;
+  --accent-ink: #000;
+  --accent-soft: #2a2a27;
+  --accent-2: #8f8d88;
+  --danger: #ec8a7e;
+  --danger-soft: #3a1d19;
+  --font-display: var(--font);
+  --font-body: var(--font);
+  --font-mono: var(--font);
+  --radius: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+body { margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 3vw, 32px);
+  padding-block: 28px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Kopf */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.mast-main { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.eyebrow-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.chip {
+  font-size: 13px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 980px;
+  padding: 2px 10px;
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(32px, 4.6vw, 48px);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede { margin: 0; color: var(--muted); max-width: 58ch; }
+.privacy {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.privacy svg { flex: none; margin-top: 2px; stroke: var(--accent); fill: none; }
+
+/* Raster */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+@media (min-width: 980px) {
+  .layout { grid-template-columns: minmax(320px, 372px) minmax(0, 1fr); align-items: start; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: -0.016em;
+  margin: 0;
+  text-wrap: balance;
+}
+h3 {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--fg);
+  margin: 0;
+}
+
+/* Eingabebogen */
+.panel-inputs { padding: 20px; display: flex; flex-direction: column; gap: 22px; }
+.panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.note { margin: -14px 0 0; font-size: 13px; color: var(--muted); }
+.group { display: flex; flex-direction: column; gap: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > label, .seg-field > legend { font-size: 13px; font-weight: 500; line-height: 1.35; }
+.ref {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.input {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.input:focus-within { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.input input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  padding: 9px 10px;
+}
+.input input:focus { outline: none; }
+.input.num input { text-align: right; }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.unit {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--surface-2);
+  border-left: 1px solid var(--line);
+  border-radius: 0 7px 7px 0;
+  white-space: nowrap;
+}
+.seg-field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.seg-field > legend { padding: 0; margin-bottom: 6px; }
+.seg {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.seg label { flex: 1; display: flex; min-width: 0; cursor: pointer; }
+.seg label + label { border-left: 1px solid var(--line); }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.seg span {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  padding: 8px 6px;
+  color: var(--fg);
+}
+.seg input:checked + span { background: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: -4px; }
+.seg label:hover input:not(:checked) + span { background: var(--accent-soft); }
+
+.btn {
+  font: 500 13px var(--font-body);
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 980px;
+  padding: 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-link {
+  font: 500 13px var(--font-body);
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.btn-link:hover { text-decoration-color: var(--accent); }
+
+select {
+  font: inherit;
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+/* Ergebnisbogen */
+.results { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.msg-error {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.msg-error ul { margin: 6px 0 0; padding-left: 18px; }
+.out { display: flex; flex-direction: column; gap: 20px; min-width: 0; transition: opacity 0.2s; }
+.out.stale { opacity: 0.4; pointer-events: none; }
+
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.meta { font-size: 13px; color: var(--muted); margin: 0; }
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+@media (min-width: 640px) and (max-width: 979px) { .figures { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1180px) { .figures { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fig { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fig .label { font-size: 13px; color: var(--muted); }
+.fig .value {
+  font-weight: 600;
+  font-size: clamp(19px, 2.3vw, 25px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.fig .value small { font-size: 0.62em; font-weight: 500; color: var(--muted); margin-left: 3px; }
+.fig .value { letter-spacing: -0.02em; }
+.fig.primary .value { color: var(--accent); }
+
+.hints { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.hints li { font-size: 13px; color: var(--muted); padding-left: 16px; position: relative; max-width: 80ch; }
+.hints li::before { content: ""; position: absolute; left: 3px; top: 0.6em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-2); }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 720px) and (max-width: 979px) { .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+@media (min-width: 1180px) { .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+.block { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.caption { margin: -6px 0 0; font-size: 13px; color: var(--muted); }
+
+/* Kontenliste */
+.ledger { margin: 0; display: flex; flex-direction: column; }
+.ledger .row {
+  display: grid;
+  grid-template-columns: 1.1em minmax(0, 1fr) auto;
+  gap: 4px 8px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.ledger .row:first-child { border-top: 0; }
+.ledger .sign { font-family: var(--font-mono); color: var(--muted); }
+.ledger dt { min-width: 0; font-size: 14px; }
+.ledger dt .ref { display: block; margin-top: 1px; }
+.ledger dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 14px; }
+.ledger .zero dd, .ledger .zero dt { color: var(--muted); }
+.ledger .total { border-top: 1px solid var(--fg); }
+.ledger .total dt { font-weight: 600; }
+.ledger .total dd { font-weight: 600; border-bottom: 3px double var(--fg); padding-bottom: 2px; }
+
+/* Diagramm */
+.chart { width: 100%; min-height: 220px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .baseline { stroke: var(--muted); stroke-width: 1; }
+.chart .axis { fill: var(--muted); font: 11px var(--font-body); font-variant-numeric: tabular-nums; }
+.chart .bar-dep { fill: var(--accent); }
+.chart .bar-int { fill: var(--accent-2); }
+.chart .pay { stroke: var(--fg); stroke-width: 2; stroke-dasharray: 5 4; }
+.chart .hit { fill: transparent; }
+.chart .hit:hover { fill: var(--accent-soft); fill-opacity: 0.5; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+.sw-dep { background: var(--accent); }
+.sw-int { background: var(--accent-2); }
+.sw-pay { height: 2px; width: 18px; background: repeating-linear-gradient(90deg, var(--fg) 0 5px, transparent 5px 9px); border-radius: 0; }
+
+/* Register */
+.tabs-block { padding: 0; gap: 0; }
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  font: 500 14px var(--font-body);
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 14px 8px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--fg); }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.tabpanel { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.toolbar .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.toolbar label { font-size: 13px; color: var(--muted); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.table-wrap.tall { max-height: 520px; overflow: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 12px;
+  text-align: right;
+  padding: 9px 12px;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+td { padding: 7px 12px; border-top: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th.l, td.l { text-align: left; }
+td.wrap { white-space: normal; min-width: 14ch; }
+td.dim { color: var(--muted); }
+td .ref { font-size: 11px; }
+tbody tr:hover td { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+tr.group td {
+  background: var(--surface-2);
+  color: var(--fg);
+  font-weight: 500;
+  font-size: 12.5px;
+  text-align: left;
+}
+tfoot td { font-weight: 600; border-top: 1px solid var(--fg); }
+tfoot td.sum { border-bottom: 3px double var(--fg); }
+tr.total td { font-weight: 600; border-top: 1px solid var(--fg); }
+tr.total td.sum { border-bottom: 3px double var(--fg); }
+
+/* Fuss */
+.assumptions { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.assumptions ul { margin: 0; padding-left: 18px; columns: 1; column-gap: 32px; font-size: 13px; color: var(--muted); }
+.assumptions li { break-inside: avoid; margin-bottom: 4px; }
+@media (min-width: 900px) { .assumptions ul { columns: 2; } }
+.disclaimer { font-size: 12.5px; color: var(--muted); margin: 0; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  max-width: calc(100% - 32px);
+  z-index: 10;
+}
+@media (prefers-reduced-motion: reduce) { .out { transition: none; } }
+</style>
+</head>
+<body class="page-leasingrechner">
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="gn" id="gn"><nav class="gn-bar" aria-label="Hauptmenü"><a class="gn-brand" href="/"><svg class="gn-mark" viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 5.5h15M10 5.5V17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 9h3.6M4 12.2h3.6M12.4 9H16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".55"/></svg><span>Abschlusswerkstatt</span></a><ul class="gn-list"><li class="gn-item"><a class="gn-link" href="/info">Info</a></li><li class="gn-item gn-has"><a class="gn-link" href="/agenten/">Agenten</a><button class="gn-open" type="button" aria-expanded="false" aria-controls="fly-agenten"><span class="sr">Untermenü Agenten</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gn-fly" id="fly-agenten"><div class="gn-fly-in"><div><p class="gn-fly-h">Agenten entdecken</p><ul class="gn-fly-big"><li><a href="/agenten/">Übersicht</a></li><li><a href="/agenten/email-agent">Email Agent</a></li><li><a href="/agenten/ifrs-updates">IFRS Updates</a></li><li><a href="/agenten/unternehmens-updates">Unternehmens Updates</a></li></ul></div><div class="gn-fly-note"><p class="gn-fly-h">Kurz erklärt</p><p class="gn-fly-text">Agenten erledigen wiederkehrende Vorarbeit im Abschluss: Postfächer, Standardsetzer und Unternehmensmeldungen. Die Entscheidungen bleiben bei Ihnen.</p></div></div></div></li><li class="gn-item gn-has"><a class="gn-link" href="/analysen/">Analysen</a><button class="gn-open" type="button" aria-expanded="false" aria-controls="fly-analysen"><span class="sr">Untermenü Analysen</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gn-fly" id="fly-analysen"><div class="gn-fly-in"><div><p class="gn-fly-h">Analysen entdecken</p><ul class="gn-fly-big"><li><a href="/analysen/">Übersicht</a></li><li><a href="/analysen/m-und-a">M&amp;A</a></li></ul></div><div class="gn-fly-note"><p class="gn-fly-h">Kurz erklärt</p><p class="gn-fly-text">Fachliche Analysen zu Bilanzierungsfragen mit Gewicht, zuerst zu Unternehmenserwerben.</p></div></div></div></li><li class="gn-item gn-has"><a class="gn-link" href="/tools/" aria-current="true">Tools</a><button class="gn-open" type="button" aria-expanded="false" aria-controls="fly-tools"><span class="sr">Untermenü Tools</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gn-fly" id="fly-tools"><div class="gn-fly-in"><div><p class="gn-fly-h">Tools entdecken</p><ul class="gn-fly-big"><li><a href="/tools/">Übersicht</a></li><li><a href="/tools/leasingrechner" aria-current="page">Leasingrechner</a></li></ul></div><div class="gn-fly-note"><p class="gn-fly-h">Kurz erklärt</p><p class="gn-fly-text">Werkzeuge, die nachvollziehbar rechnen. Alle Berechnungen laufen in Ihrem Browser.</p></div></div></div></li><li class="gn-item"><a class="gn-link" href="/ueber-mich">Über mich</a></li></ul><a class="gn-mail" href="mailto:oliver.waetjen@abschlusswerkstatt.de"><span class="sr">E-Mail schreiben</span><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M3 5.5l7 5.2 7-5.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></a><button class="gn-burger" type="button" aria-expanded="false" aria-controls="gn-mobile" aria-label="Menü öffnen"><span></span><span></span></button></nav><div class="gm" id="gn-mobile" hidden><ul class="gm-list"><li><a class="gm-link" href="/info">Info</a></li><li><div class="gm-row"><a class="gm-link" href="/agenten/">Agenten</a><button class="gm-toggle" type="button" aria-expanded="false" aria-controls="gm-agenten"><span class="sr">Unterseiten von Agenten</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><ul class="gm-sub" id="gm-agenten" hidden><li><a href="/agenten/email-agent">Email Agent</a></li><li><a href="/agenten/ifrs-updates">IFRS Updates</a></li><li><a href="/agenten/unternehmens-updates">Unternehmens Updates</a></li></ul></li><li><div class="gm-row"><a class="gm-link" href="/analysen/">Analysen</a><button class="gm-toggle" type="button" aria-expanded="false" aria-controls="gm-analysen"><span class="sr">Unterseiten von Analysen</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><ul class="gm-sub" id="gm-analysen" hidden><li><a href="/analysen/m-und-a">M&amp;A</a></li></ul></li><li><div class="gm-row"><a class="gm-link" href="/tools/" aria-current="true">Tools</a><button class="gm-toggle" type="button" aria-expanded="false" aria-controls="gm-tools"><span class="sr">Unterseiten von Tools</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><ul class="gm-sub" id="gm-tools" hidden><li><a href="/tools/leasingrechner" aria-current="page">Leasingrechner</a></li></ul></li><li><a class="gm-link" href="/ueber-mich">Über mich</a></li></ul><p class="gm-foot"><a href="mailto:oliver.waetjen@abschlusswerkstatt.de">oliver.waetjen@abschlusswerkstatt.de</a></p></div></header><div class="gn-curtain" id="gn-curtain" aria-hidden="true"></div>
+<nav class="ln" aria-label="Tools"><div class="ln-in"><a class="ln-title" href="/tools/">Tools</a><button class="ln-toggle" type="button" aria-expanded="false" aria-controls="ln-list"><span class="sr">Seiten in Tools</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><ul class="ln-list" id="ln-list"><li><a href="/tools/">Übersicht</a></li><li><a href="/tools/leasingrechner" aria-current="page">Leasingrechner</a></li></ul></div></nav>
+<main id="main">
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-main">
+      <div class="eyebrow-row"><span class="chip">Prototyp</span></div>
+      <h1>IFRS 16 Leasingrechner</h1>
+      <p class="lede">Berechnet Zugangsbewertung, Tilgungsplan, Buchungssätze und Fälligkeitsanalyse für einen Leasingvertrag.</p>
+    </div>
+    <p class="privacy">
+      <svg width="16" height="16" viewBox="0 0 16 16" stroke-width="1.5" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
+      <span>Alle Berechnungen laufen in Ihrem Browser. Vertragsdaten werden weder gespeichert noch übertragen.</span>
+    </p>
+  </header>
+
+  <div class="layout">
+    <form class="card panel-inputs" id="form" novalidate autocomplete="off">
+      <div class="panel-head">
+        <h2>Vertragsdaten</h2>
+        <button type="button" class="btn-link" id="reset">Beispiel laden</button>
+      </div>
+      <p class="note">Vorbelegt mit einem Beispielvertrag. Ersetzen Sie die Werte durch Ihre eigenen Vertragsdaten.</p>
+
+      <section class="group" aria-labelledby="g-vertrag">
+        <h3 id="g-vertrag">Vertrag</h3>
+        <div class="field">
+          <label for="f-name">Bezeichnung</label>
+          <div class="input"><input type="text" id="f-name" maxlength="80"></div>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label for="f-start">Bereitstellungsdatum <span class="ref">IFRS 16.22</span></label>
+            <div class="input"><input type="date" id="f-start"></div>
+          </div>
+          <div class="field">
+            <label for="f-term">Laufzeit <span class="ref">IFRS 16.18</span></label>
+            <div class="input num"><input type="text" inputmode="numeric" id="f-term"><span class="unit">Monate</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="group" aria-labelledby="g-zahlung">
+        <h3 id="g-zahlung">Leasingzahlungen <span class="ref">IFRS 16.27</span></h3>
+        <fieldset class="seg-field">
+          <legend>Zahlungsrhythmus</legend>
+          <div class="seg">
+            <label><input type="radio" name="freq" value="1" id="f-freq-1"><span>Monatlich</span></label>
+            <label><input type="radio" name="freq" value="3" id="f-freq-3"><span>Quartalsweise</span></label>
+            <label><input type="radio" name="freq" value="12" id="f-freq-12"><span>Jährlich</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="seg-field">
+          <legend>Zahlungszeitpunkt</legend>
+          <div class="seg">
+            <label><input type="radio" name="timing" value="advance" id="f-timing-adv"><span>Vorschüssig</span></label>
+            <label><input type="radio" name="timing" value="arrears" id="f-timing-arr"><span>Nachschüssig</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="f-pay">Leasingrate <span class="ref">feste Zahlungen, 16.27(a)</span></label>
+          <div class="input num"><input type="text" inputmode="decimal" id="f-pay"><span class="unit" id="u-pay">€ / Monat</span></div>
+        </div>
+        <div class="field">
+          <label for="f-rv">Erwartete Zahlung aus Restwertgarantie <span class="ref">16.27(c)</span></label>
+          <div class="input num"><input type="text" inputmode="decimal" id="f-rv"><span class="unit">€</span></div>
+        </div>
+      </section>
+
+      <section class="group" aria-labelledby="g-zins">
+        <h3 id="g-zins">Abzinsung <span class="ref">IFRS 16.26</span></h3>
+        <div class="field">
+          <label for="f-rate">Grenzfremdkapitalzins p. a.</label>
+          <div class="input num"><input type="text" inputmode="decimal" id="f-rate"><span class="unit">%</span></div>
+        </div>
+      </section>
+
+      <section class="group" aria-labelledby="g-rou">
+        <h3 id="g-rou">Weitere Bestandteile des Nutzungsrechts <span class="ref">IFRS 16.24</span></h3>
+        <div class="grid2">
+          <div class="field">
+            <label for="f-prepay">Vor Beginn geleistete Zahlungen <span class="ref">16.24(b)</span></label>
+            <div class="input num"><input type="text" inputmode="decimal" id="f-prepay"><span class="unit">€</span></div>
+          </div>
+          <div class="field">
+            <label for="f-incent">Erhaltene Leasinganreize <span class="ref">16.24(b)</span></label>
+            <div class="input num"><input type="text" inputmode="decimal" id="f-incent"><span class="unit">€</span></div>
+          </div>
+          <div class="field">
+            <label for="f-idc">Anfängliche direkte Kosten <span class="ref">16.24(c)</span></label>
+            <div class="input num"><input type="text" inputmode="decimal" id="f-idc"><span class="unit">€</span></div>
+          </div>
+          <div class="field">
+            <label for="f-restore">Rückbaukosten, Barwert <span class="ref">16.24(d)</span></label>
+            <div class="input num"><input type="text" inputmode="decimal" id="f-restore"><span class="unit">€</span></div>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <main class="results">
+      <div class="msg-error" id="errors" role="alert" hidden></div>
+
+      <div class="out" id="out">
+        <section class="results" aria-labelledby="sum-title" style="gap:12px">
+          <div class="section-head">
+            <h2 id="sum-title">Zugangsbewertung</h2>
+            <p class="meta" id="sum-meta"></p>
+          </div>
+          <div class="figures">
+            <div class="fig primary"><span class="label">Leasingverbindlichkeit</span><span class="value" id="v-l0"></span><span class="ref">IFRS 16.26 · Barwert</span></div>
+            <div class="fig primary"><span class="label">Nutzungsrecht</span><span class="value" id="v-rou"></span><span class="ref">IFRS 16.24</span></div>
+            <div class="fig"><span class="label">Leasingzahlungen gesamt</span><span class="value" id="v-pay"></span><span class="ref">undiskontiert</span></div>
+            <div class="fig"><span class="label">Zinsaufwand gesamt</span><span class="value" id="v-int"></span><span class="ref">über die Laufzeit</span></div>
+          </div>
+          <ul class="hints" id="hints"></ul>
+        </section>
+
+        <div class="split">
+          <section class="card block" aria-labelledby="h-comp">
+            <h2 id="h-comp">Zusammensetzung des Nutzungsrechts</h2>
+            <dl class="ledger" id="composition"></dl>
+          </section>
+          <section class="card block" aria-labelledby="h-chart">
+            <h2 id="h-chart">Aufwand je Geschäftsjahr</h2>
+            <p class="caption">Abschreibung und Zinsen im Vergleich zu den gezahlten Leasingraten. Fahren Sie über einen Balken für die Werte.</p>
+            <div class="chart" id="chart" role="img"></div>
+            <div class="legend" aria-hidden="true">
+              <span><i class="sw sw-dep"></i>Abschreibung</span>
+              <span><i class="sw sw-int"></i>Zinsaufwand</span>
+              <span><i class="sw sw-pay"></i>Leasingzahlungen</span>
+            </div>
+          </section>
+        </div>
+
+        <section class="card block tabs-block" aria-label="Detailauswertungen">
+          <div class="tabs" role="tablist" aria-label="Auswertung wählen">
+            <button type="button" class="tab" role="tab" id="t-plan" data-panel="p-plan" aria-controls="p-plan" aria-selected="true">Tilgungsplan</button>
+            <button type="button" class="tab" role="tab" id="t-years" data-panel="p-years" aria-controls="p-years" aria-selected="false" tabindex="-1">Jahresübersicht</button>
+            <button type="button" class="tab" role="tab" id="t-journal" data-panel="p-journal" aria-controls="p-journal" aria-selected="false" tabindex="-1">Buchungssätze</button>
+            <button type="button" class="tab" role="tab" id="t-maturity" data-panel="p-maturity" aria-controls="p-maturity" aria-selected="false" tabindex="-1">Fälligkeitsanalyse</button>
+          </div>
+
+          <div class="tabpanel" id="p-plan" role="tabpanel" aria-labelledby="t-plan">
+            <div class="toolbar">
+              <p class="meta" id="plan-meta"></p>
+              <button type="button" class="btn" data-copy="plan">Tabelle kopieren</button>
+            </div>
+            <div class="table-wrap tall" id="plan-table"></div>
+          </div>
+
+          <div class="tabpanel" id="p-years" role="tabpanel" aria-labelledby="t-years" hidden>
+            <div class="toolbar">
+              <p class="meta">Geschäftsjahr = Kalenderjahr. Kurzfristiger Anteil = Minderung der Verbindlichkeit in den folgenden 12 Monaten.</p>
+              <button type="button" class="btn" data-copy="years">Tabelle kopieren</button>
+            </div>
+            <div class="table-wrap" id="years-table"></div>
+          </div>
+
+          <div class="tabpanel" id="p-journal" role="tabpanel" aria-labelledby="t-journal" hidden>
+            <div class="toolbar">
+              <div class="controls">
+                <label for="y-journal">Geschäftsjahr</label>
+                <select id="y-journal"></select>
+              </div>
+              <button type="button" class="btn" data-copy="journal">Tabelle kopieren</button>
+            </div>
+            <div class="table-wrap" id="journal-table"></div>
+          </div>
+
+          <div class="tabpanel" id="p-maturity" role="tabpanel" aria-labelledby="t-maturity" hidden>
+            <div class="toolbar">
+              <div class="controls">
+                <label for="y-maturity">Stichtag 31.12.</label>
+                <select id="y-maturity"></select>
+              </div>
+              <button type="button" class="btn" data-copy="maturity">Tabelle kopieren</button>
+            </div>
+            <p class="meta">Undiskontierte Leasingzahlungen nach Restlaufzeit gemäß IFRS 16.58 i. V. m. IFRS 7.39, übergeleitet auf den Buchwert der Leasingverbindlichkeit.</p>
+            <div class="table-wrap" id="maturity-table"></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="card assumptions" aria-labelledby="h-ass">
+        <h3 id="h-ass">Annahmen dieses Prototyps</h3>
+        <ul>
+          <li>Lineare Abschreibung des Nutzungsrechts über die Laufzeit (kein Eigentumsübergang, keine hinreichend sichere Kaufoption).</li>
+          <li>Konforme Umrechnung des Jahreszinses: Monatszins = (1 + i)<sup>1/12</sup> − 1.</li>
+          <li>Feste Zahlungen ohne Indexanpassung. Modifikationen, Neubewertungen und Verlängerungsoptionen sind nicht abgebildet.</li>
+          <li>Eine vorschüssige erste Rate ist im Barwert enthalten und wird am Bereitstellungsdatum gezahlt.</li>
+          <li>Zuordnung zum Geschäftsjahr nach Leasingmonat; Geschäftsjahr entspricht dem Kalenderjahr.</li>
+          <li>Keine latenten Steuern, keine Fremdwährung. Gerundet wird nur in der Anzeige.</li>
+        </ul>
+        <p class="disclaimer">Keine Bilanzierungs- oder Rechtsberatung. Alle Ergebnisse ohne Gewähr; bitte vor Verwendung im Abschluss fachlich prüfen.</p>
+      </section>
+    </main>
+  </div>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ENGINE START */
+function parseISO(s) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
+  if (!m) return null;
+  const y = +m[1], mo = +m[2], d = +m[3];
+  if (mo < 1 || mo > 12 || d < 1 || d > 31 || y < 1900 || y > 2200) return null;
+  return { y, m: mo, d };
+}
+function addMonths(b, n) {
+  const total = b.y * 12 + (b.m - 1) + n;
+  const y = Math.floor(total / 12);
+  const m = total - y * 12 + 1;
+  const dim = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  return { y, m, d: Math.min(b.d, dim) };
+}
+function minusDay(dt) {
+  const x = new Date(Date.UTC(dt.y, dt.m - 1, dt.d - 1));
+  return { y: x.getUTCFullYear(), m: x.getUTCMonth() + 1, d: x.getUTCDate() };
+}
+function fmtDate(dt) {
+  return String(dt.d).padStart(2, '0') + '.' + String(dt.m).padStart(2, '0') + '.' + dt.y;
+}
+
+function validate(inp) {
+  const e = [];
+  if (!parseISO(inp.start)) e.push('Bitte ein gültiges Bereitstellungsdatum eingeben.');
+  if (!Number.isInteger(inp.T) || inp.T < 1 || inp.T > 600) {
+    e.push('Laufzeit: Bitte eine ganze Zahl zwischen 1 und 600 Monaten eingeben.');
+  } else if (inp.T % inp.mpp !== 0) {
+    const rhythm = inp.mpp === 3 ? 'quartalsweiser' : 'jährlicher';
+    e.push('Laufzeit: ' + inp.T + ' Monate passen nicht zu ' + rhythm + ' Zahlung. Bitte ein Vielfaches von ' + inp.mpp + ' Monaten eingeben.');
+  }
+  const money = [['P', 'Leasingrate'], ['rv', 'Restwertgarantie'], ['prepay', 'Vor Beginn geleistete Zahlungen'], ['incent', 'Erhaltene Leasinganreize'], ['idc', 'Anfängliche direkte Kosten'], ['restore', 'Rückbaukosten']];
+  for (const [k, label] of money) {
+    if (!Number.isFinite(inp[k])) e.push(label + ': Bitte einen Betrag eingeben, zum Beispiel 4.500,00.');
+    else if (inp[k] < 0) e.push(label + ': Bitte einen Betrag ab 0 eingeben.');
+  }
+  if (!Number.isFinite(inp.rate)) e.push('Grenzfremdkapitalzins: Bitte eine Zahl eingeben, zum Beispiel 4,5.');
+  else if (inp.rate < 0 || inp.rate > 50) e.push('Grenzfremdkapitalzins: Bitte einen Wert zwischen 0 und 50 % eingeben.');
+  if (e.length === 0 && inp.P === 0 && inp.rv === 0) e.push('Leasingrate: Bitte einen Betrag größer als 0 eingeben.');
+  return e;
+}
+
+function compute(inp) {
+  const errors = validate(inp);
+  if (errors.length) return { ok: false, errors };
+  const { T, P, mpp, advance, rate, prepay, incent, idc, restore, rv } = inp;
+  const start = parseISO(inp.start);
+  const j = Math.pow(1 + rate / 100, 1 / 12) - 1;
+  const ip = Math.pow(1 + j, mpp) - 1;
+  const n = T / mpp;
+
+  let L0 = 0;
+  for (let k = 0; k < n; k++) {
+    const m = advance ? k * mpp : (k + 1) * mpp;
+    L0 += P / Math.pow(1 + j, m);
+  }
+  L0 += rv / Math.pow(1 + j, T);
+  const rou0 = L0 + prepay - incent + idc + restore;
+  if (rou0 < 0) return { ok: false, errors: ['Die erhaltenen Leasinganreize übersteigen den Zugangswert des Nutzungsrechts. Bitte die Eingaben prüfen.'] };
+  const dep = rou0 / T;
+
+  const months = [];
+  let L = L0, R = rou0;
+  for (let t = 0; t < T; t++) {
+    const open = L, ropen = R;
+    let pay = 0, interest = 0;
+    if (advance) {
+      if (t % mpp === 0) { pay += P; L -= P; }
+      interest = L * j; L += interest;
+      if (t === T - 1 && rv) { pay += rv; L -= rv; }
+    } else {
+      interest = L * j; L += interest;
+      if ((t + 1) % mpp === 0) pay += P;
+      if (t === T - 1) pay += rv;
+      L -= pay;
+    }
+    if (t === T - 1 && Math.abs(L) < 1e-6) L = 0;
+    R -= dep;
+    if (t === T - 1 && Math.abs(R) < 1e-6) R = 0;
+    months.push({ t, from: addMonths(start, t), open, pay, interest, close: L, ropen, dep, rclose: R });
+  }
+
+  const periods = [];
+  for (let k = 0; k < n; k++) {
+    const a = k * mpp, b = a + mpp - 1;
+    let pay = 0, interest = 0, dp = 0;
+    for (let t = a; t <= b; t++) { pay += months[t].pay; interest += months[t].interest; dp += months[t].dep; }
+    periods.push({
+      k: k + 1,
+      from: addMonths(start, a),
+      to: minusDay(addMonths(start, b + 1)),
+      open: months[a].open,
+      pay, interest,
+      principal: pay - interest,
+      close: months[b].close,
+      dep: dp,
+      rclose: months[b].rclose
+    });
+  }
+
+  const years = [];
+  let cur = null;
+  for (const m of months) {
+    if (!cur || cur.y !== m.from.y) {
+      cur = { y: m.from.y, firstIdx: m.t, lastIdx: m.t, count: 0, pay: 0, interest: 0, dep: 0 };
+      years.push(cur);
+    }
+    cur.lastIdx = m.t; cur.count++;
+    cur.pay += m.pay; cur.interest += m.interest; cur.dep += m.dep;
+  }
+  for (const y of years) {
+    y.Lye = months[y.lastIdx].close;
+    y.Rye = months[y.lastIdx].rclose;
+    const nx = y.lastIdx + 12;
+    const L12 = nx < T ? months[nx].close : 0;
+    y.current = y.Lye - L12;
+    y.nonCurrent = y.Lye - y.current;
+  }
+
+  let totalPay = 0, totalInt = 0;
+  for (const m of months) { totalPay += m.pay; totalInt += m.interest; }
+
+  return { ok: true, start, T, P, mpp, advance, rate, j, ip, n, L0, rou0, dep, prepay, incent, idc, restore, rv, months, periods, years, totalPay, totalInt };
+}
+
+function maturity(res, yr) {
+  const last = yr.lastIdx;
+  const b = { y1: 0, y5: 0, over: 0 };
+  for (let t = last + 1; t < res.T; t++) {
+    const a = res.months[t].pay;
+    if (!a) continue;
+    const k = t - last;
+    if (k <= 12) b.y1 += a; else if (k <= 60) b.y5 += a; else b.over += a;
+  }
+  const total = b.y1 + b.y5 + b.over;
+  return { y1: b.y1, y5: b.y5, over: b.over, total, interest: total - yr.Lye, pv: yr.Lye };
+}
+
+function journalRows(res, yr) {
+  const rows = [];
+  if (yr === res.years[0]) {
+    rows.push({ group: 'Zugang am ' + fmtDate(res.start) });
+    rows.push({ s: 'Nutzungsrecht', h: 'Leasingverbindlichkeit', a: res.L0, ref: 'IFRS 16.23, 16.26' });
+    if (res.prepay > 0) rows.push({ s: 'Nutzungsrecht', h: 'Geleistete Anzahlungen', a: res.prepay, ref: 'IFRS 16.24(b)' });
+    if (res.incent > 0) rows.push({ s: 'Bank / Forderungen', h: 'Nutzungsrecht', a: res.incent, ref: 'IFRS 16.24(b)' });
+    if (res.idc > 0) rows.push({ s: 'Nutzungsrecht', h: 'Bank / Verbindlichkeiten', a: res.idc, ref: 'IFRS 16.24(c)' });
+    if (res.restore > 0) rows.push({ s: 'Nutzungsrecht', h: 'Rückstellung für Rückbauverpflichtungen', a: res.restore, ref: 'IFRS 16.24(d), IAS 37' });
+  }
+  rows.push({ group: 'Laufende Buchungen ' + yr.y + ' (Summe aus ' + yr.count + (yr.count === 1 ? ' Monat)' : ' Monaten)') });
+  rows.push({ s: 'Zinsaufwand', h: 'Leasingverbindlichkeit', a: yr.interest, ref: 'IFRS 16.36(a)' });
+  rows.push({ s: 'Leasingverbindlichkeit', h: 'Bank', a: yr.pay, ref: 'IFRS 16.36(b)' });
+  rows.push({ s: 'Abschreibungen auf Nutzungsrechte', h: 'Nutzungsrecht', a: yr.dep, ref: 'IFRS 16.31 f.' });
+  return rows;
+}
+/* ENGINE END */
+
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const f2 = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const f4 = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+  const clean = (v) => (Math.abs(v) < 0.005 ? 0 : v);
+  const num = (v) => f2.format(clean(v));
+  const eur = (v) => num(v) + ' €';
+  const tsv = (v) => clean(v).toFixed(2).replace('.', ',');
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  const DEFAULTS = {
+    name: 'Beispiel: Bürofläche Hauptverwaltung',
+    start: '2026-07-01', term: '60', freq: '1', timing: 'advance',
+    pay: '4.500,00', rv: '0,00', rate: '4,50',
+    prepay: '0,00', incent: '0,00', idc: '3.000,00', restore: '12.000,00'
+  };
+  const MONEY = ['pay', 'rv', 'prepay', 'incent', 'idc', 'restore'];
+  const RHYTHM = { 1: { unit: '€ / Monat', adj: 'monatliche' }, 3: { unit: '€ / Quartal', adj: 'quartalsweise' }, 12: { unit: '€ / Jahr', adj: 'jährliche' } };
+
+  function parseDE(s) {
+    s = String(s).trim().replace(/[\s€%]/g, '');
+    if (!s) return 0;
+    if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/^-?\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+    if (!/^-?\d*\.?\d+$/.test(s)) return NaN;
+    return Number(s);
+  }
+
+  function fill(d) {
+    $('#f-name').value = d.name;
+    $('#f-start').value = d.start;
+    $('#f-term').value = d.term;
+    document.querySelector('input[name="freq"][value="' + d.freq + '"]').checked = true;
+    document.querySelector('input[name="timing"][value="' + d.timing + '"]').checked = true;
+    for (const k of MONEY) $('#f-' + k).value = d[k];
+    $('#f-rate').value = d.rate;
+  }
+
+  function read() {
+    const mpp = Number(document.querySelector('input[name="freq"]:checked').value);
+    const termRaw = $('#f-term').value.trim();
+    return {
+      name: $('#f-name').value.trim(),
+      start: $('#f-start').value,
+      T: /^\d+$/.test(termRaw) ? Number(termRaw) : NaN,
+      mpp,
+      advance: document.querySelector('input[name="timing"]:checked').value === 'advance',
+      P: parseDE($('#f-pay').value),
+      rv: parseDE($('#f-rv').value),
+      rate: parseDE($('#f-rate').value),
+      prepay: parseDE($('#f-prepay').value),
+      incent: parseDE($('#f-incent').value),
+      idc: parseDE($('#f-idc').value),
+      restore: parseDE($('#f-restore').value)
+    };
+  }
+
+  let last = null;
+  let selYear = null;
+
+  function update() {
+    const inp = read();
+    $('#u-pay').textContent = RHYTHM[inp.mpp].unit;
+    const fieldIds = { P: 'pay', rv: 'rv', rate: 'rate', prepay: 'prepay', incent: 'incent', idc: 'idc', restore: 'restore' };
+    for (const [k, id] of Object.entries(fieldIds)) {
+      const bad = !Number.isFinite(inp[k]) || inp[k] < 0;
+      $('#f-' + id).parentElement.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    }
+    $('#f-term').parentElement.setAttribute('aria-invalid', (!Number.isInteger(inp.T) || inp.T < 1 || inp.T > 600 || inp.T % inp.mpp !== 0) ? 'true' : 'false');
+
+    const res = compute(inp);
+    const box = $('#errors');
+    if (!res.ok) {
+      box.innerHTML = '<strong>Die Berechnung ist noch nicht möglich.</strong><ul>' + res.errors.map((e) => '<li>' + esc(e) + '</li>').join('') + '</ul>';
+      box.hidden = false;
+      $('#out').classList.add('stale');
+      return;
+    }
+    box.hidden = true;
+    $('#out').classList.remove('stale');
+    res.name = inp.name;
+    last = res;
+    if (selYear === null || !res.years.some((y) => y.y === selYear)) selYear = res.years[0].y;
+    render(res);
+  }
+
+  function render(res) {
+    const r = RHYTHM[res.mpp];
+    $('#sum-title').textContent = 'Zugangsbewertung zum ' + fmtDate(res.start);
+    $('#sum-meta').textContent = (res.name ? res.name + ' · ' : '') + res.n + ' ' + r.adj + ' Zahlungen, ' + (res.advance ? 'vorschüssig' : 'nachschüssig');
+    $('#v-l0').innerHTML = num(res.L0) + '<small>€</small>';
+    $('#v-rou').innerHTML = num(res.rou0) + '<small>€</small>';
+    $('#v-pay').innerHTML = num(res.totalPay) + '<small>€</small>';
+    $('#v-int').innerHTML = num(res.totalInt) + '<small>€</small>';
+
+    const hints = [];
+    hints.push('Abzinsung mit ' + f4.format(res.j * 100) + ' % je Monat' + (res.mpp > 1 ? ' bzw. ' + f4.format(res.ip * 100) + ' % je Zahlungsperiode' : '') + ' (konform umgerechnet).');
+    if (res.advance) hints.push('Die erste Rate über ' + eur(res.P) + ' wird am Bereitstellungsdatum gezahlt und mindert die Verbindlichkeit sofort.');
+    if (res.T <= 12) hints.push('Laufzeit bis 12 Monate: Die Erleichterung für kurzfristige Leasingverhältnisse nach IFRS 16.5 ff. kann genutzt werden. Dann entfällt der Ansatz von Nutzungsrecht und Verbindlichkeit.');
+    $('#hints').innerHTML = hints.map((h) => '<li>' + esc(h) + '</li>').join('');
+
+    renderComposition(res);
+    renderChart(res);
+    renderPlan(res);
+    renderYears(res);
+    renderYearSelects(res);
+    renderJournal(res);
+    renderMaturity(res);
+  }
+
+  function renderComposition(res) {
+    const rows = [
+      ['', 'Leasingverbindlichkeit bei Zugang', '16.24(a)', res.L0],
+      ['+', 'Vor Beginn geleistete Zahlungen', '16.24(b)', res.prepay],
+      ['−', 'Erhaltene Leasinganreize', '16.24(b)', res.incent],
+      ['+', 'Anfängliche direkte Kosten', '16.24(c)', res.idc],
+      ['+', 'Rückbaukosten, Barwert', '16.24(d)', res.restore]
+    ];
+    let h = '';
+    for (const [sign, label, ref, v] of rows) {
+      h += '<div class="row' + (clean(v) === 0 ? ' zero' : '') + '"><span class="sign">' + sign + '</span><dt>' + label + '<span class="ref">IFRS ' + ref + '</span></dt><dd>' + eur(v) + '</dd></div>';
+    }
+    h += '<div class="row total"><span class="sign">=</span><dt>Nutzungsrecht bei Zugang</dt><dd>' + eur(res.rou0) + '</dd></div>';
+    $('#composition').innerHTML = h;
+  }
+
+  function niceScale(max, ticks) {
+    const raw = max / ticks;
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const norm = raw / mag;
+    const nice = norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 2.5 ? 2.5 : norm <= 5 ? 5 : 10;
+    const step = nice * mag;
+    return { step, top: Math.ceil(max / step - 1e-9) * step };
+  }
+  function axisLabel(v, top) {
+    if (top >= 1e6) return new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 }).format(v / 1e6) + ' Mio. €';
+    if (top >= 1e4) return new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 }).format(v / 1e3) + ' T€';
+    return new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(v) + ' €';
+  }
+
+  function renderChart(res) {
+    const el = $('#chart');
+    const ys = res.years;
+    const W = Math.max(300, Math.round(el.clientWidth || 600));
+    const H = Math.round(Math.min(300, Math.max(220, W * 0.46)));
+    const ml = 58, mr = 8, mt = 10, mb = 26;
+    const pw = W - ml - mr, ph = H - mt - mb;
+    const max = Math.max(1, ...ys.map((y) => Math.max(y.dep + y.interest, y.pay)));
+    const { step, top } = niceScale(max, 4);
+    const sy = (v) => mt + ph - (v / top) * ph;
+    const band = pw / ys.length;
+    const bw = Math.max(4, Math.min(40, band * 0.56));
+    const every = band < 38 ? Math.ceil(38 / band) : 1;
+    let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" xmlns="http://www.w3.org/2000/svg">';
+    for (let v = 0; v <= top + 1e-9; v += step) {
+      const y = sy(v).toFixed(1);
+      s += '<line class="' + (v === 0 ? 'baseline' : 'grid') + '" x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y + '" y2="' + y + '"/>';
+      s += '<text class="axis" x="' + (ml - 8) + '" y="' + y + '" text-anchor="end" dominant-baseline="middle">' + axisLabel(v, top) + '</text>';
+    }
+    ys.forEach((y, i) => {
+      const cx = ml + band * i + band / 2;
+      const x = (cx - bw / 2).toFixed(1);
+      const y0 = sy(0), yd = sy(y.dep), yi = sy(y.dep + y.interest), yp = sy(y.pay);
+      s += '<rect class="hit" x="' + (ml + band * i).toFixed(1) + '" y="' + mt + '" width="' + band.toFixed(1) + '" height="' + ph + '"><title>' + y.y + ' (' + y.count + ' Monate): Abschreibung ' + eur(y.dep) + ', Zinsen ' + eur(y.interest) + ', Leasingzahlungen ' + eur(y.pay) + '</title></rect>';
+      s += '<rect class="bar-dep" x="' + x + '" y="' + yd.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(0, y0 - yd).toFixed(1) + '" pointer-events="none"/>';
+      s += '<rect class="bar-int" x="' + x + '" y="' + yi.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(0, yd - yi).toFixed(1) + '" pointer-events="none"/>';
+      if (y.pay > 0) {
+        const half = Math.min(band * 0.46, bw * 0.8);
+        s += '<line class="pay" x1="' + (cx - half).toFixed(1) + '" x2="' + (cx + half).toFixed(1) + '" y1="' + yp.toFixed(1) + '" y2="' + yp.toFixed(1) + '" pointer-events="none"/>';
+      }
+      if (i % every === 0) s += '<text class="axis" x="' + cx.toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle">' + y.y + '</text>';
+    });
+    s += '</svg>';
+    el.innerHTML = s;
+    const first = ys[0];
+    el.setAttribute('aria-label', 'Balkendiagramm: Abschreibung und Zinsaufwand je Geschäftsjahr von ' + first.y + ' bis ' + ys[ys.length - 1].y + ' im Vergleich zu den Leasingzahlungen. Im ersten Jahr ' + eur(first.dep + first.interest) + ' Aufwand bei ' + eur(first.pay) + ' Zahlungen.');
+  }
+
+  function renderPlan(res) {
+    const r = RHYTHM[res.mpp];
+    $('#plan-meta').textContent = res.n + ' ' + r.adj + ' Zahlungsperioden. Anfangsbestand vor Zahlung, Endbestand nach Zinsen und Zahlung.';
+    let h = '<table><thead><tr><th class="l">Nr.</th><th class="l">Zeitraum</th><th>Anfangsbestand</th><th>Zahlung</th><th>Zinsen</th><th>Tilgung</th><th>Endbestand</th><th>Abschreibung</th><th>Nutzungsrecht</th></tr></thead><tbody>';
+    let sp = 0, si = 0, st = 0, sd = 0;
+    for (const p of res.periods) {
+      sp += p.pay; si += p.interest; st += p.principal; sd += p.dep;
+      h += '<tr><td class="l dim">' + p.k + '</td><td class="l">' + fmtDate(p.from) + ' – ' + fmtDate(p.to) + '</td><td>' + num(p.open) + '</td><td>' + num(p.pay) + '</td><td>' + num(p.interest) + '</td><td>' + num(p.principal) + '</td><td>' + num(p.close) + '</td><td>' + num(p.dep) + '</td><td>' + num(p.rclose) + '</td></tr>';
+    }
+    h += '</tbody><tfoot><tr><td class="l" colspan="3">Summe</td><td class="sum">' + num(sp) + '</td><td class="sum">' + num(si) + '</td><td class="sum">' + num(st) + '</td><td></td><td class="sum">' + num(sd) + '</td><td></td></tr></tfoot></table>';
+    $('#plan-table').innerHTML = h;
+  }
+
+  function renderYears(res) {
+    let h = '<table><thead><tr><th class="l">Geschäftsjahr</th><th>Monate</th><th>Zahlungen</th><th>Zinsaufwand</th><th>Abschreibung</th><th>Aufwand gesamt</th><th>Verbindlichkeit 31.12.</th><th>davon kurzfristig</th><th>davon langfristig</th><th>Nutzungsrecht 31.12.</th></tr></thead><tbody>';
+    let sp = 0, si = 0, sd = 0;
+    for (const y of res.years) {
+      sp += y.pay; si += y.interest; sd += y.dep;
+      h += '<tr><td class="l">' + y.y + '</td><td class="dim">' + y.count + '</td><td>' + num(y.pay) + '</td><td>' + num(y.interest) + '</td><td>' + num(y.dep) + '</td><td>' + num(y.interest + y.dep) + '</td><td>' + num(y.Lye) + '</td><td>' + num(y.current) + '</td><td>' + num(y.nonCurrent) + '</td><td>' + num(y.Rye) + '</td></tr>';
+    }
+    h += '</tbody><tfoot><tr><td class="l">Summe</td><td class="dim">' + res.T + '</td><td class="sum">' + num(sp) + '</td><td class="sum">' + num(si) + '</td><td class="sum">' + num(sd) + '</td><td class="sum">' + num(si + sd) + '</td><td colspan="4"></td></tr></tfoot></table>';
+    $('#years-table').innerHTML = h;
+  }
+
+  function renderYearSelects(res) {
+    const opts = res.years.map((y) => '<option value="' + y.y + '"' + (y.y === selYear ? ' selected' : '') + '>' + y.y + '</option>').join('');
+    $('#y-journal').innerHTML = opts;
+    $('#y-maturity').innerHTML = opts;
+  }
+  const yearObj = (res) => res.years.find((y) => y.y === selYear) || res.years[0];
+
+  function renderJournal(res) {
+    const rows = journalRows(res, yearObj(res));
+    let h = '<table><thead><tr><th class="l">Nr.</th><th class="l">Soll</th><th class="l">Haben</th><th>Betrag</th><th class="l">Grundlage</th></tr></thead><tbody>';
+    let i = 0;
+    for (const r of rows) {
+      if (r.group) { h += '<tr class="group"><td colspan="5">' + esc(r.group) + '</td></tr>'; continue; }
+      i++;
+      h += '<tr><td class="l dim">' + i + '</td><td class="l wrap">' + r.s + '</td><td class="l wrap">an ' + r.h + '</td><td>' + num(r.a) + '</td><td class="l"><span class="ref">' + r.ref + '</span></td></tr>';
+    }
+    h += '</tbody></table>';
+    $('#journal-table').innerHTML = h;
+  }
+
+  function renderMaturity(res) {
+    const yr = yearObj(res);
+    const m = maturity(res, yr);
+    const ended = yr.lastIdx === res.T - 1;
+    let h = '<table><thead><tr><th class="l">Restlaufzeit zum 31.12.' + yr.y + '</th><th>Betrag</th></tr></thead><tbody>';
+    h += '<tr><td class="l">bis 1 Jahr</td><td>' + num(m.y1) + '</td></tr>';
+    h += '<tr><td class="l">1 bis 5 Jahre</td><td>' + num(m.y5) + '</td></tr>';
+    h += '<tr><td class="l">über 5 Jahre</td><td>' + num(m.over) + '</td></tr>';
+    h += '<tr class="total"><td class="l">Summe undiskontierte Leasingzahlungen</td><td>' + num(m.total) + '</td></tr>';
+    h += '<tr><td class="l">abzüglich künftiger Zinsen</td><td>' + (clean(m.interest) === 0 ? num(0) : '−' + num(m.interest)) + '</td></tr>';
+    h += '<tr class="total"><td class="l">Leasingverbindlichkeit (Barwert)</td><td class="sum">' + num(m.pv) + '</td></tr>';
+    h += '</tbody></table>';
+    if (ended) h += '<p class="meta" style="padding:10px 12px;margin:0">Der Vertrag ist in diesem Geschäftsjahr ausgelaufen.</p>';
+    $('#maturity-table').innerHTML = h;
+  }
+
+  /* Kopieren als Tabulator-Text fuer Excel */
+  function buildTSV(kind) {
+    const res = last;
+    if (!res) return '';
+    const L = [];
+    if (kind === 'plan') {
+      L.push(['Nr.', 'Von', 'Bis', 'Anfangsbestand', 'Zahlung', 'Zinsen', 'Tilgung', 'Endbestand', 'Abschreibung', 'Nutzungsrecht'].join('\t'));
+      for (const p of res.periods) L.push([p.k, fmtDate(p.from), fmtDate(p.to), tsv(p.open), tsv(p.pay), tsv(p.interest), tsv(p.principal), tsv(p.close), tsv(p.dep), tsv(p.rclose)].join('\t'));
+    } else if (kind === 'years') {
+      L.push(['Geschäftsjahr', 'Monate', 'Zahlungen', 'Zinsaufwand', 'Abschreibung', 'Aufwand gesamt', 'Verbindlichkeit 31.12.', 'davon kurzfristig', 'davon langfristig', 'Nutzungsrecht 31.12.'].join('\t'));
+      for (const y of res.years) L.push([y.y, y.count, tsv(y.pay), tsv(y.interest), tsv(y.dep), tsv(y.interest + y.dep), tsv(y.Lye), tsv(y.current), tsv(y.nonCurrent), tsv(y.Rye)].join('\t'));
+    } else if (kind === 'journal') {
+      L.push(['Nr.', 'Soll', 'Haben', 'Betrag', 'Grundlage'].join('\t'));
+      let i = 0;
+      for (const r of journalRows(res, yearObj(res))) {
+        if (r.group) { L.push(r.group); continue; }
+        i++;
+        L.push([i, r.s, r.h, tsv(r.a), r.ref].join('\t'));
+      }
+    } else if (kind === 'maturity') {
+      const yr = yearObj(res);
+      const m = maturity(res, yr);
+      L.push(['Restlaufzeit zum 31.12.' + yr.y, 'Betrag'].join('\t'));
+      L.push(['bis 1 Jahr', tsv(m.y1)].join('\t'));
+      L.push(['1 bis 5 Jahre', tsv(m.y5)].join('\t'));
+      L.push(['über 5 Jahre', tsv(m.over)].join('\t'));
+      L.push(['Summe undiskontierte Leasingzahlungen', tsv(m.total)].join('\t'));
+      L.push(['abzüglich künftiger Zinsen', tsv(-m.interest)].join('\t'));
+      L.push(['Leasingverbindlichkeit (Barwert)', tsv(m.pv)].join('\t'));
+    }
+    return L.join('\n');
+  }
+
+  let toastTimer = null;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, 2800);
+  }
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    toast(ok ? 'Tabelle kopiert. In Excel mit Strg+V einfügen.' : 'Kopieren wird hier nicht unterstützt. Bitte die Tabelle markieren und kopieren.');
+  }
+  document.querySelectorAll('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const text = buildTSV(btn.dataset.copy);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => toast('Tabelle kopiert. In Excel mit Strg+V einfügen.'), () => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    });
+  });
+
+  /* Register */
+  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+  function selectTab(tab) {
+    for (const t of tabs) {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.dataset.panel).hidden = !on;
+    }
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectTab(t));
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+      next.focus();
+      selectTab(next);
+    });
+  });
+
+  function onYear(e) {
+    selYear = Number(e.target.value);
+    if (last) { renderYearSelects(last); renderJournal(last); renderMaturity(last); }
+  }
+  $('#y-journal').addEventListener('change', onYear);
+  $('#y-maturity').addEventListener('change', onYear);
+
+  /* Eingaben */
+  const form = $('#form');
+  form.addEventListener('input', update);
+  form.addEventListener('change', update);
+  form.addEventListener('submit', (e) => e.preventDefault());
+  for (const k of MONEY.concat(['rate'])) {
+    $('#f-' + k).addEventListener('blur', (e) => {
+      const v = parseDE(e.target.value);
+      if (Number.isFinite(v) && v >= 0) e.target.value = f2.format(v);
+    });
+  }
+  $('#reset').addEventListener('click', () => { fill(DEFAULTS); selYear = null; update(); });
+
+  let rw = 0;
+  if ('ResizeObserver' in window) {
+    new ResizeObserver((entries) => {
+      const w = Math.round(entries[0].contentRect.width);
+      if (w !== rw && last) { rw = w; renderChart(last); }
+    }).observe($('#chart'));
+  }
+
+  fill(DEFAULTS);
+  update();
+})();
+</script>
+</main>
+<footer class="gf"><div class="gf-in"><p class="gf-note">Die Inhalte dieser Website dienen der Information und ersetzen keine Bilanzierungs-, Steuer- oder Rechtsberatung. Berechnungen ohne Gewähr.</p><nav class="gf-map" aria-label="Seitenübersicht"><div class="gf-col"><p class="gf-h">Info</p><ul><li><a href="/info">Worum es hier geht</a></li></ul></div><div class="gf-col"><p class="gf-h">Agenten</p><ul><li><a href="/agenten/">Übersicht</a></li><li><a href="/agenten/email-agent">Email Agent</a></li><li><a href="/agenten/ifrs-updates">IFRS Updates</a></li><li><a href="/agenten/unternehmens-updates">Unternehmens Updates</a></li></ul></div><div class="gf-col"><p class="gf-h">Analysen</p><ul><li><a href="/analysen/">Übersicht</a></li><li><a href="/analysen/m-und-a">M&amp;A</a></li></ul></div><div class="gf-col"><p class="gf-h">Tools</p><ul><li><a href="/tools/">Übersicht</a></li><li><a href="/tools/leasingrechner">Leasingrechner</a></li></ul></div><div class="gf-col"><p class="gf-h">Über mich</p><ul><li><a href="/ueber-mich">Oliver Wätjen</a></li><li><a href="mailto:oliver.waetjen@abschlusswerkstatt.de">E-Mail schreiben</a></li></ul></div><div class="gf-col"><p class="gf-h">Rechtliches</p><ul><li><a href="/rechtliches#impressum">Impressum</a></li><li><a href="/rechtliches#datenschutz">Datenschutz</a></li></ul></div></nav><div class="gf-legal"><p>© 2026 Oliver Wätjen. Abschlusswerkstatt</p><ul><li><a href="/rechtliches#impressum">Impressum</a></li><li><a href="/rechtliches#datenschutz">Datenschutz</a></li></ul></div></div></footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

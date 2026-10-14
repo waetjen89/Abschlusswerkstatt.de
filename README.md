@@ -1,11 +1,29 @@
 # Abschlusswerkstatt.de
 
-Statische Website zum Einsatz von KI in der Abschlusserstellung, mit IFRS-16-Leasingrechner.
+Statische Website zum Einsatz von KI in der Abschlusserstellung.
 
-- `index.html` – Startseite mit Schnellcheck
-- `rechner.html` – IFRS-16-Leasingrechner (rechnet vollständig im Browser)
-- `rechtliches.html` – Impressum und Datenschutz (Platzhalter vor Veröffentlichung ausfüllen)
-- `fonts/`, `fonts.css` – lokal eingebundene Schriften (IBM Plex, SIL OFL)
+## Aufbau
 
-Veröffentlichung über Cloudflare Pages: kein Build-Befehl, Ausgabeverzeichnis `/`.
-Solange Platzhalter enthalten sind, ist auf allen Seiten `noindex` gesetzt.
+- Inhalte je Seite: `_build/pages/` (Kopfangaben im ersten Kommentar, Bausteine wie `{{SHIFT}}` werden ersetzt)
+- Menüzeile, Bereichsleiste, Fußzeile und Bausteine: `_build/build.py`
+- Gestaltung und Verhalten: `assets/site.css`, `assets/site.js`
+- Schrift: Host Grotesk, lokal in `fonts/` (SIL Open Font License)
+
+Nach jeder Änderung an `_build/` die Seiten neu erzeugen:
+
+    python3 _build/build.py
+
+## Seiten
+
+- `/` Startseite
+- `/info`
+- `/agenten/` mit `email-agent`, `ifrs-updates`, `unternehmens-updates`
+- `/analysen/` mit `m-und-a`
+- `/tools/` mit `leasingrechner` (rechnet vollständig im Browser)
+- `/ueber-mich`, `/rechtliches`
+- `/rechner` leitet auf `/tools/leasingrechner` weiter
+
+## Veröffentlichung
+
+Cloudflare (Worker `abschlusswerkstatt-de`) übernimmt jeden Push auf `main` automatisch.
+Solange die Seite noch nicht freigegeben ist, ist auf allen Seiten `noindex` gesetzt.
