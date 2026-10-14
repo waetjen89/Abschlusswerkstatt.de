@@ -8,4 +8,4 @@ Statische Website zum Einsatz von KI in der Abschlusserstellung, mit IFRS-16-Lea
 - `fonts/`, `fonts.css` – lokal eingebundene Schriften (IBM Plex, SIL OFL)
 
 Veröffentlichung über Cloudflare Pages: kein Build-Befehl, Ausgabeverzeichnis `/`.
-Solange Platzhalter enthalten sind, sind `noindex` und ein sperrendes `robots.txt` gesetzt.
+Solange Platzhalter enthalten sind, ist auf allen Seiten `noindex` gesetzt.
