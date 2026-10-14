@@ -170,7 +170,51 @@ def components(today):
         "SOON_INLINE": '<span class="status status-soon">In Vorbereitung</span>',
         "LIVE_INLINE": '<span class="status status-live">Verfügbar</span>',
         "MAIL": MAIL,
+        "NEWS": news_html(),
     }
+
+
+# ---------- News ----------
+
+NEWS_FILE = ROOT / "_build" / "news.json"
+NEWS_TYPES = {"artikel": "Artikel", "video": "Video"}
+
+
+def fmt_date(iso):
+    d = datetime.date.fromisoformat(iso)
+    return f"{d.day}. {MONTHS[d.month - 1]} {d.year}"
+
+
+def news_html():
+    """Liste aller freigegebenen Meldungen, neueste zuerst, nach Monat gruppiert."""
+    import json
+    entries = json.loads(NEWS_FILE.read_text(encoding="utf-8")).get("entries", []) if NEWS_FILE.exists() else []
+    if not entries:
+        return ('<div class="prose"><p>Die erste Meldung folgt in Kürze. Bis dahin finden Sie unter '
+                '<a href="/agenten/ifrs-updates">IFRS Updates</a> die Anleitung für einen eigenen IFRS-Agenten.</p></div>')
+    entries = sorted(entries, key=lambda e: (e["added"], e.get("published") or e["added"]), reverse=True)
+    groups, out = {}, []
+    for e in entries:
+        groups.setdefault(e["added"][:7], []).append(e)
+    out.append('<div class="news">')
+    for ym, items in groups.items():
+        y, m = int(ym[:4]), int(ym[5:7])
+        out.append(f'<section class="news-month" aria-label="{MONTHS[m - 1]} {y}">'
+                   f'<h2 class="news-mh">{MONTHS[m - 1]} {y}</h2><ol class="news-list">')
+        for e in items:
+            meta = [esc(e["source"]), NEWS_TYPES[e["type"]]]
+            if e.get("lang") == "en":
+                meta.append('<abbr title="Englischsprachige Quelle">EN</abbr>')
+            date = e.get("published") or e["added"]
+            out.append(
+                f'<li class="news-item"><p class="news-meta"><time datetime="{date}">{fmt_date(date)}</time>'
+                f'<span>{" · ".join(meta)}</span></p>'
+                f'<h3 class="news-title"><a href="{esc(e["url"])}" rel="noopener" target="_blank">{esc(e["title"])}'
+                f'<span class="sr"> (öffnet in neuem Tab)</span><span class="news-arrow" aria-hidden="true">↗</span></a></h3>'
+                f'<p class="news-sum">{esc(e["summary"])}</p></li>')
+        out.append('</ol></section>')
+    out.append('</div>')
+    return "".join(out)
 
 
 # ---------- Rahmen: Menüzeile, Bereichsleiste, Fußzeile ----------

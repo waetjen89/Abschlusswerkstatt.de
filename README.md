@@ -17,11 +17,18 @@ Nach jeder Änderung an `_build/` die Seiten neu erzeugen:
 
 - `/` Startseite
 - `/info`
+- `/news` (Einträge aus `_build/news.json`)
 - `/agenten/` mit `email-agent`, `ifrs-updates`, `unternehmens-updates`
 - `/analysen/` mit `m-und-a`
 - `/tools/` mit `leasingrechner` (rechnet vollständig im Browser)
 - `/ueber-mich`, `/rechtliches`
 - `/rechner` leitet auf `/tools/leasingrechner` weiter
+
+## News-Agent
+
+Ein wöchentlicher Agent schlägt drei Beiträge für `/news` vor. Er arbeitet nach
+`_build/agent/news-agent.md`, nutzt `_build/news_agent.py` und legt seine Vorschläge als Pull Request
+aus dem Zweig `news-agent` an. Veröffentlicht wird erst durch das Mergen des Pull Requests.
 
 ## Veröffentlichung
 
