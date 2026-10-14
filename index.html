@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abschlusswerkstatt</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="fonts.css">
+<style>
+/* Layout: Startseite. Kopfzeile, Hero mit Schnellcheck rechts, Funktionen als Abschlusswerkstatt-Zeilen, Ausblick und Autor nebeneinander, Fusszeile mit Rechtlichem. */
+:root {
+  --bg: #edf1ed;
+  --surface: #fafbf9;
+  --surface-2: #e2e8e3;
+  --fg: #16201b;
+  --muted: #55655c;
+  --line: #cbd5ce;
+  --accent: #1b5a45;
+  --accent-ink: #f6faf8;
+  --accent-soft: #d5e6dd;
+  --accent-2: #a8761c;
+  --danger: #9e3329;
+  --font-display: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1411;
+    --surface: #131c18;
+    --surface-2: #1a2621;
+    --fg: #e1e9e4;
+    --muted: #97a99f;
+    --line: #283630;
+    --accent: #63b797;
+    --accent-ink: #08130e;
+    --accent-soft: #1b392d;
+    --accent-2: #d8a94b;
+    --danger: #ee8c80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1411;
+  --surface: #131c18;
+  --surface-2: #1a2621;
+  --fg: #e1e9e4;
+  --muted: #97a99f;
+  --line: #283630;
+  --accent: #63b797;
+  --accent-ink: #08130e;
+  --accent-soft: #1b392d;
+  --accent-2: #d8a94b;
+  --danger: #ee8c80;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+[hidden] { display: none !important; }
+body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+}
+.ref {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.ph { color: var(--accent-2); border-bottom: 1px dashed currentColor; }
+
+/* Kopfzeile */
+.topbar { border-bottom: 1px solid var(--line); background: var(--surface); }
+.topbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 12px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--fg);
+  text-decoration: none;
+  min-width: 0;
+}
+.brand svg { flex: none; stroke: var(--accent); fill: none; }
+.brand-name { font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1; }
+.brand-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nav { display: flex; align-items: center; gap: 22px; font-size: 14px; }
+.navlink { color: var(--fg); text-decoration: none; }
+.navlink:hover { color: var(--accent); }
+@media (max-width: 640px) {
+  .navlink, .brand-tag { display: none; }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 15px var(--font-body);
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 11px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-small { font-size: 14px; padding: 7px 13px; }
+.textlink { font-size: 15px; font-weight: 500; text-underline-offset: 4px; }
+
+/* Hero */
+.hero .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  padding-block: 48px 56px;
+  align-items: start;
+}
+@media (min-width: 920px) {
+  .hero .container { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; padding-block: 80px 88px; }
+}
+.hero-copy { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(34px, 5.6vw, 62px);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+.hero h1 .uline { border-bottom: 0.08em double var(--accent); padding-bottom: 0.02em; }
+.lede { margin: 0; font-size: clamp(17px, 1.6vw, 19px); color: var(--muted); max-width: 52ch; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.assure { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; color: var(--muted); }
+.assure svg { flex: none; stroke: var(--accent); fill: none; }
+
+/* Schnellcheck */
+.quick {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.quick-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.quick-head h2 { font-family: var(--font-display); font-weight: 600; font-size: 20px; margin: 0; }
+.qgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > label, .seg-field > legend { font-size: 13px; font-weight: 500; line-height: 1.35; }
+.input {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.input:focus-within { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.input input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  padding: 8px 10px;
+}
+.input input:focus { outline: none; }
+.unit {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--surface-2);
+  border-left: 1px solid var(--line);
+  border-radius: 0 3px 3px 0;
+  white-space: nowrap;
+}
+.seg-field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.seg-field > legend { padding: 0; margin-bottom: 6px; }
+.seg { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.seg label { flex: 1; display: flex; cursor: pointer; }
+.seg label + label { border-left: 1px solid var(--line); }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.seg span { flex: 1; text-align: center; font-size: 13px; padding: 7px 6px; }
+.seg input:checked + span { background: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: -4px; }
+.seg label:hover input:not(:checked) + span { background: var(--accent-soft); }
+
+.qout { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line); transition: opacity 0.2s; }
+.qout.stale { opacity: 0.35; }
+.qmain { display: flex; flex-direction: column; gap: 2px; }
+.qmain .label { font-size: 13px; color: var(--muted); }
+.qmain .value {
+  align-self: flex-start;
+  font-weight: 600;
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  border-bottom: 3px double var(--fg);
+  padding-bottom: 2px;
+}
+.qrows { margin: 0; display: flex; flex-direction: column; }
+.qrows div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.qrows div:first-child { border-top: 0; }
+.qrows dt { color: var(--muted); }
+.qrows dd { margin: 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.qnote { margin: 0; font-size: 12.5px; color: var(--muted); }
+.qmsg { margin: 0; font-size: 13px; color: var(--danger); }
+
+/* Abschnitte */
+.section { border-top: 1px solid var(--line); }
+.section > .container { padding-block: 56px 64px; display: flex; flex-direction: column; gap: 28px; }
+.sec-head { display: flex; flex-direction: column; gap: 6px; max-width: 62ch; }
+.sec-head h2, .band h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(25px, 3vw, 34px);
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+.sec-head p { margin: 0; color: var(--muted); }
+
+.feat { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 40px; }
+@media (min-width: 720px) { .feat { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .feat { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.feat li { border-top: 1px solid var(--line); padding-block: 18px 24px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.feat h3 { font-size: 17px; font-weight: 600; line-height: 1.3; margin: 0; }
+.feat p { margin: 0; font-size: 15px; color: var(--muted); }
+
+.band { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; }
+@media (min-width: 860px) { .band { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } }
+.band > div { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.band p { margin: 0; max-width: 56ch; }
+.plan { list-style: none; margin: 0; padding: 0; }
+.plan li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.plan li:last-child { border-bottom: 1px solid var(--line); }
+.plan .what { font-weight: 500; }
+.muted { color: var(--muted); }
+
+/* Fusszeile */
+.footer { border-top: 1px solid var(--line); background: var(--surface); }
+.footer .container { padding-block: 24px 32px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--muted); }
+.footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.footer nav { display: flex; gap: 20px; }
+.footer a { color: var(--fg); }
+.footer small { font-size: 12.5px; }
+@media (prefers-reduced-motion: reduce) { .qout { transition: none; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Abschlusswerkstatt Startseite">
+      <svg width="22" height="22" viewBox="0 0 22 22" stroke-width="1.6" aria-hidden="true"><rect x="2" y="2" width="18" height="18" rx="2"/><path d="M6 8h10M6 12h10M10 17h6M10 19h6" stroke-linecap="round"/></svg>
+      <span class="brand-name">Abschlusswerkstatt</span>
+      <span class="brand-tag">KI im Abschluss</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="navlink" href="#funktionen">Funktionen</a>
+      <a class="navlink" href="#ueber">Über</a>
+      <a class="btn btn-primary btn-small" href="rechner.html">Rechner öffnen</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <div class="hero-copy">
+        <span class="eyebrow">IFRS 16 · Leasingnehmer · kostenlos</span>
+        <h1 id="hero-title">Leasingbilanzierung nach IFRS&nbsp;16, <span class="uline">sauber durchgerechnet.</span></h1>
+        <p class="lede">Barwert, Nutzungsrecht, Tilgungsplan, Buchungssätze und Fälligkeitsanalyse für Ihren Leasingvertrag. Für Controller und Bilanzbuchhalter, die IFRS 16 neben vielen anderen Themen betreuen.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="rechner.html">Zum Leasingrechner</a>
+          <a class="textlink" href="#funktionen">Funktionen ansehen</a>
+        </div>
+        <p class="assure">
+          <svg width="16" height="16" viewBox="0 0 16 16" stroke-width="1.5" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
+          Ohne Anmeldung. Ihre Eingaben bleiben in Ihrem Browser.
+        </p>
+      </div>
+
+      <form class="quick" id="quick" novalidate autocomplete="off" aria-labelledby="q-title">
+        <div class="quick-head">
+          <h2 id="q-title">Schnellcheck</h2>
+          <span class="ref">monatliche Zahlung</span>
+        </div>
+        <div class="qgrid">
+          <div class="field">
+            <label for="q-pay">Leasingrate</label>
+            <div class="input"><input type="text" inputmode="decimal" id="q-pay" value="4.500,00"><span class="unit">€ / Monat</span></div>
+          </div>
+          <div class="field">
+            <label for="q-term">Laufzeit</label>
+            <div class="input"><input type="text" inputmode="numeric" id="q-term" value="60"><span class="unit">Monate</span></div>
+          </div>
+          <div class="field">
+            <label for="q-rate">Grenzfremdkapitalzins</label>
+            <div class="input"><input type="text" inputmode="decimal" id="q-rate" value="4,50"><span class="unit">% p. a.</span></div>
+          </div>
+          <fieldset class="seg-field">
+            <legend>Zahlung</legend>
+            <div class="seg">
+              <label><input type="radio" name="q-timing" value="advance" checked><span>Vorschüssig</span></label>
+              <label><input type="radio" name="q-timing" value="arrears"><span>Nachschüssig</span></label>
+            </div>
+          </fieldset>
+        </div>
+        <p class="qmsg" id="q-msg" role="alert" hidden>Bitte eine Rate größer 0, eine Laufzeit von 1 bis 600 Monaten und einen Zinssatz zwischen 0 und 50 % eingeben.</p>
+        <div class="qout" id="q-out" aria-live="polite">
+          <div class="qmain">
+            <span class="label">Leasingverbindlichkeit bei Zugang</span>
+            <span class="value" id="q-l0">–</span>
+          </div>
+          <dl class="qrows">
+            <div><dt>Zinsaufwand über die Laufzeit</dt><dd id="q-int">–</dd></div>
+            <div><dt>Abschreibung je Monat</dt><dd id="q-dep">–</dd></div>
+          </dl>
+          <p class="qnote">Nutzungsrecht ohne Vorauszahlungen, direkte Kosten und Rückbau. Die vollständige Auswertung bietet der <a href="rechner.html">Leasingrechner</a>.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" id="funktionen" aria-labelledby="f-title">
+    <div class="container">
+      <div class="sec-head">
+        <span class="eyebrow">Funktionen</span>
+        <h2 id="f-title">Was der Rechner liefert</h2>
+        <p>Alles, was Sie für Abschluss, Anhang und Prüfung eines Leasingvertrags brauchen, auf einer Seite.</p>
+      </div>
+      <ul class="feat">
+        <li>
+          <span class="ref">IFRS 16.23–16.26</span>
+          <h3>Zugangsbewertung</h3>
+          <p>Barwert der Leasingzahlungen und Nutzungsrecht, einschließlich Vorauszahlungen, Leasinganreizen, anfänglichen direkten Kosten und Rückbauverpflichtung.</p>
+        </li>
+        <li>
+          <span class="ref">IFRS 16.36</span>
+          <h3>Tilgungsplan</h3>
+          <p>Zinsen, Tilgung und Buchwerte je Periode. Monatliche, quartalsweise oder jährliche Zahlungen, vor- oder nachschüssig.</p>
+        </li>
+        <li>
+          <span class="ref">Bilanz und GuV</span>
+          <h3>Jahresübersicht</h3>
+          <p>Zinsaufwand und Abschreibung je Geschäftsjahr sowie die Aufteilung der Verbindlichkeit in kurz- und langfristig.</p>
+        </li>
+        <li>
+          <span class="ref">Soll an Haben</span>
+          <h3>Buchungssätze</h3>
+          <p>Zugangsbuchung und laufende Buchungen je Geschäftsjahr, jeweils mit Verweis auf den Standard.</p>
+        </li>
+        <li>
+          <span class="ref">IFRS 16.58 · IFRS 7.39</span>
+          <h3>Fälligkeitsanalyse</h3>
+          <p>Undiskontierte Zahlungen nach Restlaufzeit, übergeleitet auf den Buchwert der Leasingverbindlichkeit.</p>
+        </li>
+        <li>
+          <span class="ref">Strg + V</span>
+          <h3>Übernahme in Excel</h3>
+          <p>Jede Tabelle mit einem Klick in die Zwischenablage, im deutschen Zahlenformat.</p>
+        </li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="rechner.html">Leasingrechner öffnen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Ausblick und Hintergrund">
+    <div class="container">
+      <div class="band">
+        <div>
+          <span class="eyebrow">Ausblick</span>
+          <h2>Als Nächstes geplant</h2>
+          <ul class="plan">
+            <li><span class="what">Indexmieten mit Neubewertung</span><span class="ref">IFRS 16.42(b)</span></li>
+            <li><span class="what">Vertragsmodifikationen</span><span class="ref">IFRS 16.44–16.46</span></li>
+            <li><span class="what">Mehrere Verträge in einer Übersicht</span><span class="ref">Portfolio</span></li>
+            <li><span class="what">Export als Excel-Datei</span><span class="ref">.xlsx</span></li>
+          </ul>
+          <p class="muted">Welche Funktion fehlt Ihnen? Schreiben Sie an <span class="ph">[Ihre E-Mail-Adresse]</span>.</p>
+        </div>
+        <div id="ueber">
+          <span class="eyebrow">Über</span>
+          <h2>Aus der Praxis des Konzernabschlusses</h2>
+          <p>Entwickelt von <span class="ph">[Ihr Name]</span>, IFRS-Praktiker aus dem Konzernrechnungswesen. Jede Berechnung ist nachvollziehbar, verweist auf den Standard und ist auf den Cent abgestimmt.</p>
+          <p class="muted">Der Rechner ersetzt keine Bilanzierungsberatung. Er gibt Ihnen eine belastbare Grundlage, die Sie selbst prüfen und mit Ihrem Abschlussprüfer abstimmen können.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <span>© 2026 Abschlusswerkstatt · <span class="ph">[Ihr Name]</span></span>
+      <nav aria-label="Rechtliches">
+        <a href="rechtliches.html#impressum">Impressum</a>
+        <a href="rechtliches.html#datenschutz">Datenschutz</a>
+      </nav>
+    </div>
+    <small>Keine Bilanzierungs- oder Rechtsberatung. Alle Ergebnisse ohne Gewähr.</small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const f2 = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function parseDE(s) {
+    s = String(s).trim().replace(/[\s€%]/g, '');
+    if (!s) return NaN;
+    if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/^-?\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+    if (!/^-?\d*\.?\d+$/.test(s)) return NaN;
+    return Number(s);
+  }
+
+  function calc() {
+    const P = parseDE($('#q-pay').value);
+    const termRaw = $('#q-term').value.trim();
+    const T = /^\d+$/.test(termRaw) ? Number(termRaw) : NaN;
+    const r = parseDE($('#q-rate').value);
+    const advance = document.querySelector('input[name="q-timing"]:checked').value === 'advance';
+    const ok = Number.isFinite(P) && P > 0 && Number.isInteger(T) && T >= 1 && T <= 600 && Number.isFinite(r) && r >= 0 && r <= 50;
+    $('#q-msg').hidden = ok;
+    $('#q-out').classList.toggle('stale', !ok);
+    if (!ok) return;
+    const j = Math.pow(1 + r / 100, 1 / 12) - 1;
+    let L = 0;
+    for (let t = 0; t < T; t++) L += P / Math.pow(1 + j, advance ? t : t + 1);
+    $('#q-l0').textContent = f2.format(L) + ' €';
+    $('#q-int').textContent = f2.format(P * T - L) + ' €';
+    $('#q-dep').textContent = f2.format(L / T) + ' €';
+  }
+
+  const form = $('#quick');
+  form.addEventListener('input', calc);
+  form.addEventListener('change', calc);
+  form.addEventListener('submit', (e) => e.preventDefault());
+  for (const id of ['#q-pay', '#q-rate']) {
+    $(id).addEventListener('blur', (e) => {
+      const v = parseDE(e.target.value);
+      if (Number.isFinite(v) && v >= 0) e.target.value = f2.format(v);
+    });
+  }
+  calc();
+})();
+</script>
+</body>
+</html>
