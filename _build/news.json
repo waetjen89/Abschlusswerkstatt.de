@@ -1,3 +1,59 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "title": "AI and the audit: AICPA publishes practice aid to assist auditors",
+      "source": "Journal of Accountancy",
+      "url": "https://www.journalofaccountancy.com/news/2026/oct/ai-and-the-audit-aicpa-publishes-practice-aid-to-assist-auditors/",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-13",
+      "summary": "Die AICPA hat eine Praxishilfe für Abschlussprüfer zum Thema künstliche Intelligenz veröffentlicht. Sie behandelt zum einen die Folgen, wenn Unternehmen KI in der Rechnungslegung einsetzen, etwa für die Risikobeurteilung und interne Kontrollen, zum anderen den Einsatz von KI-Werkzeugen durch Prüfer selbst, einschließlich Qualitätssicherung, Überwachung, Durchsicht und kritischer Grundhaltung. Die Verantwortung für Prüfung und Prüfungsurteil bleibt beim Prüfer; weitere Leitlinien, etwa zur Würdigung von Prüfungsnachweisen bei KI-Einsatz, sind angekündigt.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-ai-and-the-audit-aicpa-publishes-practice-aid-to"
+    },
+    {
+      "title": "KI im Controlling: Vom Experimentieren zur Transformation",
+      "source": "Haufe",
+      "url": "https://www.haufe.de/controlling/controllerpraxis/ki-im-controlling-zwischen-praxis-und-potenzial_112_699228.html",
+      "type": "artikel",
+      "lang": "de",
+      "published": "2026-10-06",
+      "summary": "Der Beitrag berichtet vom 20. WHU Campus for Controlling und von der sechsten Studie des WHU Controller Panels. Danach gewinnt KI bis 2031 stark an Bedeutung, doch nur drei Prozent der Befragten sehen ihr Controlling auf der höchsten von vier Reifestufen, und 82 Prozent setzen noch keine autonomen KI-Agenten ein. Als Engpässe gelten neben der Technik vor allem Datenqualität, Prozesse, Governance und Kompetenzen; die Rolle des Controllers verschiebt sich hin zur Gestaltung von Daten- und Steuerungsmodellen.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-ki-im-controlling-vom-experimentieren-zur-transf"
+    },
+    {
+      "title": "AI didn't invent audit risk, so what actually changed?",
+      "source": "Accounting Today",
+      "url": "https://www.accountingtoday.com/opinion/ai-didnt-invent-audit-risk-so-what-actually-changed",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-13",
+      "summary": "Der Meinungsbeitrag einer Prüfungsmanagerin argumentiert, dass KI keine grundsätzlich neuen Prüfungsrisiken schafft, bekannte Risiken wie fehlerhafte Eingabedaten oder übermäßiges Vertrauen in Technik aber verschärfen kann. Als Besonderheiten nennt sie die scheinbare Vollständigkeit von KI-Ergebnissen, die erschwerte Nachvollziehbarkeit wegen wechselnder Prompts und Modellversionen sowie gleichartige Fehler, wenn mehrere Parteien ähnliche Werkzeuge nutzen. Prüfer sollten daher gezielt klären, wo generative KI die bestehenden Prüfungsgrundsätze an ihre Grenzen bringt.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-ai-didn-t-invent-audit-risk-so-what-actually-cha"
+    },
+    {
+      "title": "Using an Excel agent to clean, validate, and reconcile data",
+      "source": "Journal of Accountancy",
+      "url": "https://www.journalofaccountancy.com/issues/2026/oct/using-an-excel-agent-to-clean-validate-and-reconcile-data/",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-01",
+      "summary": "Zwei Hochschullehrer zeigen an einem simulierten Hauptbuch mit rund 59.000 Zeilen, wie ein KI-Agent in Excel Buchungsdaten für die Prüfung bereinigt, validiert und mit der Saldenliste abstimmt. Der Ablauf umfasst einen selbst entwickelten und getesteten Prüfungs-Skill, einen vom Prüfer freizugebenden Plan, die Arbeit mit nativen Excel-Formeln auf einer Datenkopie sowie ein Änderungsprotokoll für die abschließende menschliche Durchsicht. Die Autoren sehen weitere Einsatzfelder, etwa Journal-Entry-Tests und Anlagenverzeichnisse.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-using-an-excel-agent-to-clean-validate-and-recon"
+    },
+    {
+      "title": "IPA Podcast Recap: Firms Are Buying AI – Is It Changing How They Work?",
+      "source": "INSIDE Public Accounting",
+      "url": "https://insidepublicaccounting.com/2026/10/01/ipa-podcast-recap-firms-are-buying-ai-is-it-changing-how-they-work/",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-01",
+      "summary": "Der Beitrag fasst ein Podcast-Gespräch über die KI-Fragen der IPA-IT-Umfrage 2026 unter US-Prüfungs- und Steuerkanzleien zusammen. Knapp drei Viertel der Kanzleien haben KI-fähige Software gekauft, aber nur 3,2 Prozent sehen KI vollständig in ihre Abläufe integriert, und fast 43 Prozent messen noch keinen Effekt. Empfohlen wird, Erfolgskriterien vor Pilotprojekten festzulegen und Governance, Datenschutz und Schulungen vor dem produktiven Einsatz zu klären.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-ipa-podcast-recap-firms-are-buying-ai-is-it-chan"
+    }
+  ]
 }
