@@ -49,10 +49,6 @@ NAV = [
 MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",
           "September", "Oktober", "November", "Dezember"]
 
-ICON_MARK = ('<svg class="gn-mark" viewBox="0 0 20 20" aria-hidden="true">'
-             '<path d="M2.5 5.5h15M10 5.5V17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
-             '<path d="M4 9h3.6M4 12.2h3.6M12.4 9H16" fill="none" stroke="currentColor" stroke-width="1.3" '
-             'stroke-linecap="round" opacity=".55"/></svg>')
 ICON_MAIL = ('<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">'
              '<rect x="2.5" y="4.5" width="15" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/>'
              '<path d="M3 5.5l7 5.2 7-5.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>')
@@ -229,7 +225,7 @@ def global_nav(url, section):
     home_cur = ' aria-current="page"' if url == "/" else ""
     return (
         '<header class="gn" id="gn"><nav class="gn-bar" aria-label="Hauptmenü">'
-        f'<a class="gn-brand" href="/"{home_cur}>{ICON_MARK}<span>{SITE}</span></a>'
+        f'<a class="gn-brand" href="/"{home_cur}><img class="gn-logo" src="/assets/logo.svg" alt="{SITE}" width="170" height="17"></a>'
         f'<ul class="gn-list">{"".join(items)}</ul>'
         f'<a class="gn-mail" href="mailto:{MAIL}"><span class="sr">E-Mail schreiben</span>{ICON_MAIL}</a>'
         '<button class="gn-burger" type="button" aria-expanded="false" aria-controls="gn-mobile" '
