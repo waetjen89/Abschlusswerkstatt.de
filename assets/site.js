@@ -98,6 +98,32 @@
     else if (wide.addListener) wide.addListener(onWidth);
   }
 
+  Array.prototype.forEach.call(document.querySelectorAll('.copy[data-copy]'), function (btn) {
+    var label = btn.textContent;
+    var timer;
+    btn.addEventListener('click', function () {
+      var src = document.getElementById(btn.getAttribute('data-copy'));
+      if (!src) return;
+      var text = src.textContent;
+      var done = function (ok) {
+        btn.textContent = ok ? 'Kopiert' : 'Bitte markieren';
+        clearTimeout(timer);
+        timer = setTimeout(function () { btn.textContent = label; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else {
+        var range = document.createRange();
+        range.selectNodeContents(src);
+        var sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(range);
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        done(ok);
+      }
+    });
+  });
+
   var ln = document.querySelector('.ln');
   if (ln) {
     var toggle = ln.querySelector('.ln-toggle');

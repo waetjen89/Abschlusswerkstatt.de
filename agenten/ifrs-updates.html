@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>IFRS Updates – Abschlusswerkstatt</title>
-<meta name="description" content="Der Agent IFRS Updates fasst Neues von IASB, IFRS Interpretations Committee und EFRAG zusammen und ordnet es ein.">
+<meta name="description" content="Anleitung: So richten Sie sich einen eigenen KI-Agenten ein, der Änderungen von IASB, IFRS Interpretations Committee, EFRAG und ESMA beobachtet und für Ihr Unternehmen einordnet.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
@@ -19,14 +19,221 @@
 <main id="main">
 <header class="ph">
   <h1 class="ph-title">IFRS Updates</h1>
-  <p class="ph-tag">Neues von IASB, IFRS IC und EFRAG, kurz eingeordnet.</p>
-  <p class="status status-soon">In Vorbereitung</p>
+  <p class="ph-tag">Ihr eigener Agent für Änderungen an den IFRS.</p>
+  <p class="status status-live">Anleitung</p>
 </header>
 
-<div class="prose">
-  <p>Der Agent beobachtet Veröffentlichungen des IASB, Agenda-Entscheidungen des IFRS Interpretations Committee und den Stand der EU-Übernahme bei EFRAG.</p>
-  <p>Neue Standards und Änderungen werden zusammengefasst, mit dem Zeitpunkt der Erstanwendung versehen und danach eingeordnet, wen sie betreffen.</p>
-</div>
+<article class="article">
+  <p class="lead">Diese Anleitung zeigt, wie Sie sich selbst einen Agenten einrichten, der regelmäßig die Veröffentlichungen von IASB, IFRS Interpretations Committee und weiteren Stellen durchsucht und nur meldet, was für Ihr Unternehmen relevant ist. Er wird mit Ihren eigenen Unterlagen auf Ihr Unternehmen zugeschnitten, zum Beispiel mit dem Geschäftsbericht.</p>
+  <p>Der erste Teil gilt für jedes KI-Werkzeug, das im Internet suchen und Aufgaben regelmäßig ausführen kann. Im zweiten Teil folgt die Umsetzung am Beispiel von Claude.</p>
+  <p class="article-meta">Stand: Oktober 2026 · Lesezeit etwa 12 Minuten</p>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 class="toc-h" id="toc-h">Inhalt</h2>
+    <ol class="toc-list">
+      <li><a href="#aufgabe">Was der Agent leisten soll</a></li>
+      <li><a href="#quellen">Die Quellen</a></li>
+      <li><a href="#unterlagen">Welche Unterlagen Sie bereitstellen</a></li>
+      <li><a href="#profil">Das Unternehmensprofil</a></li>
+      <li><a href="#prompt">Der Prompt</a></li>
+      <li><a href="#rhythmus">Rhythmus und Zeitraum</a></li>
+      <li><a href="#achten">Worauf Sie achten sollten</a></li>
+      <li><a href="#claude">Umsetzung in Claude</a></li>
+    </ol>
+  </nav>
+
+  <p class="part">Teil 1 · Unabhängig vom Werkzeug</p>
+
+  <section id="aufgabe" aria-labelledby="h-aufgabe">
+    <h2 id="h-aufgabe"><span class="h-no">01</span>Was der Agent leisten soll</h2>
+    <p>Neue Standards, Änderungen, Entwürfe und Agenda-Entscheidungen erscheinen laufend und an verschiedenen Stellen. Für ein einzelnes Unternehmen ist davon meist nur ein kleiner Teil wesentlich. Der Agent übernimmt deshalb zwei Aufgaben: Er sammelt, was seit dem letzten Lauf neu ist, und er prüft jeden Fund gegen das Profil Ihres Unternehmens. Am Ende steht eine kurze, nach Relevanz sortierte Liste mit Fundstellen, die Sie in wenigen Minuten durchsehen.</p>
+    <p>Die fachliche Würdigung bleibt bei Ihnen. Der Agent ersetzt weder die Analyse im Einzelfall noch die Abstimmung mit dem Abschlussprüfer. Er sorgt dafür, dass Ihnen nichts Wesentliches entgeht, und nimmt Ihnen das Aussortieren ab.</p>
+  </section>
+
+  <section id="quellen" aria-labelledby="h-quellen">
+    <h2 id="h-quellen"><span class="h-no">02</span>Die Quellen</h2>
+    <p>Geben Sie dem Agenten die Quellen ausdrücklich vor. Sonst stützt er sich auf Newsletter und Fachartikel, die zeitversetzt und bereits gefiltert berichten. Solche Sekundärquellen helfen beim Finden, belegt wird aber immer mit der Veröffentlichung der zuständigen Stelle.</p>
+    <dl class="src">
+      <div><dt><a href="https://www.ifrs.org/projects/work-plan/">IASB</a></dt><dd>Arbeitsprogramm, neue Standards, Änderungen und Entwürfe zur Stellungnahme. Nach jeder Sitzung fasst das <a href="https://www.ifrs.org/news-and-events/updates/">IASB Update</a> die vorläufigen Beschlüsse zusammen.</dd></div>
+      <div><dt><a href="https://www.ifrs.org/supporting-implementation/how-we-help-support-consistent-application/">IFRS Interpretations Committee</a></dt><dd>IFRIC Update und Agenda-Entscheidungen. Sie ändern keine Standards, erläutern aber, wie bestehende Regeln anzuwenden sind. Für die Umsetzung wird nur eine angemessene Zeit zugestanden.</dd></div>
+      <div><dt><a href="https://www.efrag.org/en/news-and-calendar/news/efrag-endorsement-status-report">EFRAG</a></dt><dd>Der Endorsement Status Report zeigt, wie weit die Übernahme neuer Standards und Änderungen in EU-Recht ist.</dd></div>
+      <div><dt><a href="https://eur-lex.europa.eu/">Amtsblatt der EU</a></dt><dd>Die Übernahmeverordnungen selbst. Für Anwender in der EU zählt der Zeitpunkt der Übernahme, nicht nur der des IASB.</dd></div>
+      <div><dt><a href="https://www.esma.europa.eu/">ESMA</a></dt><dd>Die gemeinsamen europäischen Prüfungsschwerpunkte für die Jahresfinanzberichte erscheinen jeweils im Herbst, dazu öffentliche Stellungnahmen zu einzelnen Themen.</dd></div>
+      <div><dt><a href="https://www.drsc.de/">DRSC</a> und <a href="https://www.idw.de/">IDW</a></dt><dd>Stellungnahmen und Hinweise zu IFRS-Themen aus deutscher Sicht.</dd></div>
+    </dl>
+  </section>
+
+  <section id="unterlagen" aria-labelledby="h-unterlagen">
+    <h2 id="h-unterlagen"><span class="h-no">03</span>Welche Unterlagen Sie bereitstellen</h2>
+    <p>Ob eine Änderung relevant ist, kann der Agent nur beurteilen, wenn er Ihr Unternehmen kennt. Dafür eignen sich vor allem die folgenden Unterlagen.</p>
+    <h3>Veröffentlichte Unterlagen</h3>
+    <ul class="docs">
+      <li><strong>Letzter Konzernabschluss oder Geschäftsbericht.</strong> Bilanzierungs- und Bewertungsmethoden, wesentliche Ermessensentscheidungen und Schätzungen, Segmentbericht und die Größenordnung der einzelnen Posten.</li>
+      <li><strong>Anhangangabe zu neuen, noch nicht angewendeten Standards</strong> (IAS 8.30). Sie zeigt, welche Änderungen Ihr Unternehmen bereits beurteilt hat, und ist der natürliche Ausgangspunkt für den Agenten.</li>
+      <li><strong>Zwischenberichte des laufenden Jahres.</strong> Sie zeigen, was sich seit dem letzten Jahresabschluss verändert hat.</li>
+      <li><strong>Lagebericht.</strong> Geschäftsmodell, Märkte, Finanzierung und Risiken geben den Rahmen für die Relevanz.</li>
+    </ul>
+    <h3>Interne Unterlagen</h3>
+    <ul class="docs">
+      <li><strong>Konzernbilanzierungsrichtlinie.</strong> Ausgeübte Wahlrechte und hausinterne Auslegungen.</li>
+      <li><strong>Liste wesentlicher Sachverhalte und Vorhaben.</strong> Zum Beispiel geplante Erwerbe, Refinanzierungen oder neue Geschäftsfelder.</li>
+      <li><strong>Feststellungen von Abschlussprüfer oder Bilanzkontrolle.</strong> Themen, bei denen Sie ohnehin genauer hinschauen.</li>
+    </ul>
+    <p class="note">Für den Anfang genügt der veröffentlichte Geschäftsbericht. Er enthält alles für eine erste Einordnung und ist ohnehin öffentlich. Interne Unterlagen gehören nur in Werkzeuge, die Ihr Unternehmen dafür freigegeben hat. Geplante Erwerbe können sogar Insiderinformationen sein.</p>
+  </section>
+
+  <section id="profil" aria-labelledby="h-profil">
+    <h2 id="h-profil"><span class="h-no">04</span>Das Unternehmensprofil</h2>
+    <p>Statt dem Agenten bei jedem Lauf den ganzen Geschäftsbericht zu geben, verdichten Sie die Unterlagen einmal zu einem Profil von ein bis zwei Seiten. Das macht die Läufe schneller und günstiger, und Sie sehen jederzeit, auf welcher Grundlage der Agent urteilt. Den Entwurf kann die KI aus dem Geschäftsbericht erstellen, prüfen und ergänzen sollten Sie ihn selbst.</p>
+    <p>Besonders wertvoll ist der Abschnitt „Für uns nicht relevant“. Er verhindert, dass Sie jeden Monat über Versicherungsverträge oder Rohstoffabbau lesen, wenn beides bei Ihnen keine Rolle spielt.</p>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Vorlage Unternehmensprofil</span><button class="copy" type="button" data-copy="tpl-profil">Kopieren</button></figcaption>
+<pre id="tpl-profil">UNTERNEHMENSPROFIL (Stand: [Datum])
+
+Unternehmen und Rechnungslegung
+- Name, Sitz, Branche:
+- Kapitalmarktorientiert: [ja/nein], Börsensegment:
+- Rechnungslegung: IFRS, wie sie in der EU anzuwenden sind (§ 315e HGB)
+- Geschäftsjahr:
+- Abschlussprüfer:
+
+Geschäftsmodell
+- Wesentliche Produkte, Dienstleistungen und Erlösquellen:
+- Segmente:
+- Wesentliche Länder und Funktionalwährungen:
+
+Wesentliche Bilanzierungsthemen (mit Größenordnung)
+- z. B. Leasing als Leasingnehmer, Umsatzrealisierung, Vorräte,
+  Geschäfts- oder Firmenwert und Werthaltigkeitstests,
+  Finanzinstrumente und Sicherungsbeziehungen, Rückstellungen,
+  latente Steuern, Pensionen
+
+Ausgeübte Wahlrechte und wesentliche Ermessensentscheidungen
+-
+
+Für uns nicht relevant
+- z. B. Versicherungsverträge (IFRS 17), Landwirtschaft (IAS 41),
+  Exploration von Bodenschätzen (IFRS 6)
+
+Laufende Vorhaben
+- z. B. geplante Erwerbe, Refinanzierung, neue Geschäftsfelder
+
+Bereits bekannt und beurteilt
+- Standards und Änderungen aus der Anhangangabe nach IAS 8.30
+  mit Stand der eigenen Beurteilung</pre>
+    </figure>
+  </section>
+
+  <section id="prompt" aria-labelledby="h-prompt">
+    <h2 id="h-prompt"><span class="h-no">05</span>Der Prompt</h2>
+    <p>Der Prompt ist bewusst ausführlich. Jeder Abschnitt hat eine Aufgabe: Rolle, Unternehmen, Zeitraum, Quellen, Relevanzprüfung, Ausgabe und Grenzen. Ersetzen Sie die eckigen Klammern durch Ihre Angaben und fügen Sie das Profil vollständig ein.</p>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Prompt IFRS Updates</span><button class="copy" type="button" data-copy="tpl-prompt">Kopieren</button></figcaption>
+<pre id="tpl-prompt">ROLLE
+Du bist ein erfahrener IFRS-Experte und unterstützt das Konzernrechnungswesen von [Unternehmen]. Deine Aufgabe ist eine Vorauswahl: Du findest neue Entwicklungen der IFRS-Rechnungslegung und beurteilst, ob sie für unser Unternehmen relevant sein könnten. Die fachliche Würdigung trifft das Rechnungswesen.
+
+UNTERNEHMEN
+Grundlage für die Relevanz ist das folgende Unternehmensprofil:
+[Unternehmensprofil einfügen]
+
+ZEITRAUM
+Berücksichtige nur Veröffentlichungen der letzten [7] Tage. Nenne bei jedem Punkt das Veröffentlichungsdatum.
+
+QUELLEN
+Durchsuche diese Quellen und stütze jede Aussage auf die Primärquelle:
+1. IASB: Arbeitsprogramm, IASB Update, neue Standards, Änderungen und Entwürfe zur Stellungnahme (ifrs.org)
+2. IFRS Interpretations Committee: IFRIC Update, vorläufige und endgültige Agenda-Entscheidungen (ifrs.org)
+3. EFRAG: Endorsement Status Report (efrag.org)
+4. Amtsblatt der EU: Übernahmeverordnungen zu IFRS (eur-lex.europa.eu)
+5. ESMA: Prüfungsschwerpunkte und öffentliche Stellungnahmen zur Finanzberichterstattung (esma.europa.eu)
+6. DRSC und IDW: Stellungnahmen und Hinweise zu IFRS-Themen (drsc.de, idw.de)
+Veröffentlichungen von Prüfungsgesellschaften darfst du nutzen, um Hinweise zu finden. Zitiere aber immer die Primärquelle.
+
+RELEVANZPRÜFUNG
+Ordne jeden Fund einer Stufe zu:
+- Hoch: betrifft ein wesentliches Bilanzierungsthema aus dem Profil oder ändert Ansatz, Bewertung, Ausweis oder Anhangangaben voraussichtlich spürbar.
+- Mittel: betrifft uns möglicherweise, die Auswirkung ist noch unklar oder das Verfahren steht am Anfang.
+- Niedrig: betrifft Themen, die laut Profil für uns nicht relevant sind. Führe diese Punkte nur mit einer Zeile auf.
+Begründe die Einstufung in ein bis zwei Sätzen mit Bezug auf das Profil.
+
+AUSGABE
+Beginne mit einer Zusammenfassung in höchstens drei Sätzen. Gib dann je Fund an:
+- Titel und Art (neuer Standard, Änderung, Entwurf, Agenda-Entscheidung, Übernahme in EU-Recht, Prüfungsschwerpunkt)
+- Quelle mit Link und Veröffentlichungsdatum
+- Stand im Verfahren und nächster Schritt, z. B. Ende der Kommentierungsfrist
+- Erstanwendung laut IASB und Stand der Übernahme in der EU
+- Relevanz für uns mit Begründung
+- Empfohlener nächster Schritt, z. B. beobachten, Stellungnahme erwägen, Auswirkungen analysieren, Anhangangabe nach IAS 8.30 ergänzen
+Sortiere nach Relevanz, die wichtigsten Punkte zuerst. Gibt es nichts Neues, sage das in einem Satz.
+
+GRENZEN
+- Erfinde keine Inhalte, Daten oder Fundstellen. Findest du eine Information nicht in einer Quelle, schreibe „nicht gefunden“.
+- Unterscheide klar zwischen vorläufigen Beschlüssen und endgültigen Veröffentlichungen.
+- Gib keine abschließende bilanzielle Beurteilung ab, sondern benenne die Fragen, die zu prüfen sind.
+- Antworte auf Deutsch und nenne die Dokumente mit ihrem englischen Originaltitel.</pre>
+    </figure>
+    <p>Die Ausgabe ist so aufgebaut, dass Sie sie unverändert ablegen können. Über das Jahr entsteht so eine Übersicht, die auch bei der Anhangangabe zu noch nicht angewendeten Standards und im Gespräch mit dem Abschlussprüfer hilft.</p>
+  </section>
+
+  <section id="rhythmus" aria-labelledby="h-rhythmus">
+    <h2 id="h-rhythmus"><span class="h-no">06</span>Rhythmus und Zeitraum</h2>
+    <p>Der IASB tagt in der Regel monatlich, das IFRS Interpretations Committee mehrmals im Jahr. Ein wöchentlicher Lauf reicht deshalb aus. Wichtig ist, dass der Zeitraum im Prompt zum Rhythmus passt: Bei wöchentlichen Läufen sucht der Agent nach Veröffentlichungen der letzten sieben Tage. So gibt es weder Lücken noch doppelte Meldungen.</p>
+    <p>Längere Verfahren wie ein neuer Standard ziehen sich über Jahre. Tragen Sie Projekte, die Sie verfolgen wollen, im Profil unter „Bereits bekannt“ ein. Dann meldet der Agent dort nur noch neue Schritte und keine Wiederholungen.</p>
+  </section>
+
+  <section id="achten" aria-labelledby="h-achten">
+    <h2 id="h-achten"><span class="h-no">07</span>Worauf Sie achten sollten</h2>
+    <ul class="docs">
+      <li><strong>Fundstellen prüfen.</strong> KI kann Inhalte und Daten erfinden. Die Quellenpflicht im Prompt macht das selten, aber nicht unmöglich. Prüfen Sie vor allem Erstanwendungszeitpunkte und den Stand der EU-Übernahme in der verlinkten Quelle.</li>
+      <li><strong>Vorläufig ist nicht endgültig.</strong> Vorläufige Beschlüsse des IASB können sich noch ändern. Der Agent soll sie kennzeichnen, damit Sie nicht zu früh handeln.</li>
+      <li><strong>Vertraulichkeit.</strong> Klären Sie, ob Ihre Eingaben zum Training des Modells verwendet werden dürfen und wo die Daten verarbeitet werden. Interne Unterlagen nur in freigegebene Werkzeuge.</li>
+      <li><strong>Grenzen der Websuche.</strong> Manche Inhalte liegen hinter einer Anmeldung oder Bezahlschranke, etwa die vollständigen Standardtexte. Der Agent sieht dann nur, was öffentlich zugänglich ist.</li>
+      <li><strong>Profil aktuell halten.</strong> Nach jedem Jahresabschluss und bei größeren Veränderungen wie einem Erwerb gehört das Profil auf den neuen Stand.</li>
+      <li><strong>Verantwortung.</strong> Der Agent sortiert vor. Entscheidungen über Bilanzierung und Angaben trifft weiterhin das Rechnungswesen.</li>
+    </ul>
+  </section>
+
+  <p class="part">Teil 2 · Beispiel</p>
+
+  <section id="claude" aria-labelledby="h-claude">
+    <h2 id="h-claude"><span class="h-no">08</span>Umsetzung in Claude</h2>
+    <p>Claude kann im Internet suchen, Dokumente in Projekten vorhalten und Aufgaben nach Zeitplan ausführen. Damit lässt sich der Agent ohne Programmierung einrichten. Andere Werkzeuge funktionieren ähnlich, sofern sie Websuche und geplante Aufgaben bieten. Die Bezeichnungen der Oberfläche können sich je nach Version und Sprache unterscheiden.</p>
+    <ol class="steps">
+      <li>
+        <h3>Projekt anlegen und Unterlagen hochladen</h3>
+        <p>Legen Sie unter „Projects“ ein neues Projekt an, zum Beispiel „IFRS Updates“. Laden Sie den Geschäftsbericht und gegebenenfalls die Zwischenberichte über das Pluszeichen in das Projektwissen hoch.</p>
+      </li>
+      <li>
+        <h3>Profil erstellen lassen</h3>
+        <p>Bitten Sie Claude in einem Chat innerhalb des Projekts, das Profil nach der Vorlage zu erstellen. Prüfen und ergänzen Sie den Entwurf, besonders bei Wahlrechten und dem Abschnitt „Für uns nicht relevant“.</p>
+        <figure class="prompt prompt-sm">
+          <figcaption class="prompt-bar"><span>Prompt für das Profil</span><button class="copy" type="button" data-copy="tpl-entwurf">Kopieren</button></figcaption>
+<pre id="tpl-entwurf">Erstelle aus den hochgeladenen Berichten ein Unternehmensprofil nach der folgenden Vorlage. Übernimm nur Angaben, die in den Berichten stehen, und nenne zu jedem Punkt die Seite. Markiere Lücken mit [offen].
+
+[Vorlage Unternehmensprofil einfügen]</pre>
+        </figure>
+      </li>
+      <li>
+        <h3>Prompt testen</h3>
+        <p>Fügen Sie das fertige Profil in den Prompt ein und starten Sie ihn einmal von Hand in einem neuen Chat, mit eingeschalteter Websuche und einem längeren Zeitraum, etwa den letzten drei Monaten. Prüfen Sie die Fundstellen und schärfen Sie Profil und Prompt nach, bis die Einstufungen passen.</p>
+      </li>
+      <li>
+        <h3>Als geplante Aufgabe einrichten</h3>
+        <p>Öffnen Sie in der Seitenleiste „Scheduled“, wählen Sie „New task“ und richten Sie die Aufgabe manuell ein. Vergeben Sie einen Namen, fügen Sie den vollständigen Prompt mit Profil ein und wählen Sie „Weekly“ als Rhythmus. Alternativ tippen Sie in einem Chat <code>/schedule</code> und beschreiben die Aufgabe. Geplante Aufgaben gibt es in den kostenpflichtigen Tarifen. Sie laufen auch dann, wenn Ihr Rechner ausgeschaltet ist.</p>
+      </li>
+      <li>
+        <h3>Ergebnisse durchsehen</h3>
+        <p>Jeder Lauf erscheint auf der Seite „Scheduled“ als eigene Sitzung. Dort können Sie die Aufgabe auch anpassen, pausieren oder sofort ausführen. Legen Sie relevante Ergebnisse in Ihrer Dokumentation ab und aktualisieren Sie das Profil, wenn sich etwas Wesentliches ändert.</p>
+      </li>
+    </ol>
+    <p class="note">Bei den privaten Tarifen Free, Pro und Max entscheiden Sie in den Datenschutzeinstellungen selbst, ob Ihre Chats zum Training verwendet werden dürfen. Die Unternehmenstarife Team und Enterprise unterliegen den gewerblichen Bedingungen, dort werden Eingaben nicht für das Training genutzt. Für interne Unterlagen sollten Sie einen Zugang nutzen, den Ihr Unternehmen freigegeben hat.</p>
+  </section>
+
+  <section class="close" aria-label="Fazit">
+    <p>Ein solcher Agent ist in einer Stunde eingerichtet. Sein Wert liegt weniger im Finden als im Aussortieren: Statt jede Veröffentlichung selbst zu sichten, lesen Sie einmal pro Woche eine kurze Liste mit dem, was Ihr Unternehmen tatsächlich betrifft, und mit den Links, um es zu prüfen.</p>
+    <p>Fragen und Erfahrungen mit dem eigenen Agenten nehme ich gern unter <a href="mailto:oliver.waetjen@abschlusswerkstatt.de">oliver.waetjen@abschlusswerkstatt.de</a> entgegen.</p>
+  </section>
+</article>
 
 <nav class="index" aria-labelledby="ix-weitere">
   <h2 class="index-h" id="ix-weitere">Weitere Agenten</h2>
