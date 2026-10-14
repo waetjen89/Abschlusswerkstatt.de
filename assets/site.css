@@ -491,7 +491,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .gf { color: var(--pencil); font-size: 13px; line-height: 1.5; }
 .gf-in { max-width: var(--wide); margin: 0 auto; padding: 40px 22px 34px; }
 .gf-note { margin: 0 0 28px; padding-bottom: 22px; border-bottom: 1px solid var(--graphite-2); }
-.gf-map { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; }
+.gf-map { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 24px; }
 .gf-h { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--paper); }
 .gf-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .gf-col a { color: var(--pencil); text-decoration: none; }

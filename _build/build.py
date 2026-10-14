@@ -19,6 +19,7 @@ MAIL = "oliver.waetjen@abschlusswerkstatt.de"
 # Menüstruktur: Oberkategorien mit Unterseiten
 NAV = [
     {"key": "info", "label": "Info", "href": "/info"},
+    {"key": "news", "label": "News", "href": "/news"},
     {
         "key": "agenten", "label": "Agenten", "href": "/agenten/",
         "explore": "Agenten entdecken",
@@ -250,7 +251,7 @@ def local_nav(url, section):
 
 
 def footer(today):
-    cols = [("Info", [("Worum es hier geht", "/info")])]
+    cols = [("Info", [("Worum es hier geht", "/info")]), ("News", [("Aktuelles", "/news")])]
     for it in NAV:
         if "children" in it:
             cols.append((it["label"], it["children"]))
