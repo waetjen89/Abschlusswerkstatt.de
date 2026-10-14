@@ -54,6 +54,39 @@
       "summary": "Der Beitrag fasst ein Podcast-Gespräch über die KI-Fragen der IPA-IT-Umfrage 2026 unter US-Prüfungs- und Steuerkanzleien zusammen. Knapp drei Viertel der Kanzleien haben KI-fähige Software gekauft, aber nur 3,2 Prozent sehen KI vollständig in ihre Abläufe integriert, und fast 43 Prozent messen noch keinen Effekt. Empfohlen wird, Erfolgskriterien vor Pilotprojekten festzulegen und Governance, Datenschutz und Schulungen vor dem produktiven Einsatz zu klären.",
       "added": "2026-10-14",
       "id": "2026-10-14-ipa-podcast-recap-firms-are-buying-ai-is-it-chan"
+    },
+    {
+      "title": "The Varied Perceptions and Experiences of Internal Versus External Auditors in Adopting Artificial Intelligence",
+      "source": "The CPA Journal",
+      "url": "https://www.cpajournal.com/2026/10/05/the-varied-perceptions-and-experiences-of-internal-versus-external-auditors-in-adopting-artificial-intelligence-2/",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-05",
+      "summary": "Eine explorative Interviewstudie der University of Massachusetts Lowell vergleicht, wie interne und externe Prüfer den Einsatz von KI erleben. Externe Prüfer erwarten Effizienz- und Qualitätsgewinne, nennen aber Risiken wie weniger Einstiegsstellen, schwer prüfbare KI-Daten und Qualifikationslücken; interne Prüfer berichten häufiger von praktischer Anwendung. Die Autoren empfehlen gezielte Schulung und die Vorbereitung darauf, KI-Systeme und deren Ergebnisse selbst zu prüfen.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-the-varied-perceptions-and-experiences-of-intern"
+    },
+    {
+      "title": "The AI moat isn't the model",
+      "source": "Accounting Today",
+      "url": "https://www.accountingtoday.com/opinion/the-ai-moat-isnt-the-model-what-accountants-need-to-know-about-proprietary-data",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-12",
+      "summary": "Der Meinungsbeitrag argumentiert, dass bei frei lizenzierbaren KI-Modellen eigene Daten zum eigentlichen Wettbewerbsvorteil werden, und schlägt sechs Kriterien zur Beurteilung solcher Datenbestände vor. Für das Rechnungswesen folgt daraus eine Lücke: Selbst aufgebaute Daten werden meist nicht aktiviert, während erworbene Datenbanken bei Unternehmenserwerben als immaterielle Vermögenswerte angesetzt werden können. Relevant ist das für Kaufpreisallokationen, Werthaltigkeitstests und Kontrollen, wenn KI-Ergebnisse in Schätzungen einfließen.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-the-ai-moat-isn-t-the-model"
+    },
+    {
+      "title": "New checklist helps CPAs manage AI cyber risks",
+      "source": "Journal of Accountancy",
+      "url": "https://www.journalofaccountancy.com/issues/2026/oct/new-checklist-helps-cpas-manage-ai-cyber-risks/",
+      "type": "artikel",
+      "lang": "en",
+      "published": "2026-10-01",
+      "summary": "Der Beitrag stellt eine Checkliste vor, mit der Finanzabteilungen und Prüfungsgesellschaften ihre Sicherheitslage angesichts generativer und agentischer KI selbst bewerten können. Sie bündelt Anforderungen aus NIST CSF 2.0, CIS Controls, ISO 27001 und weiteren Rahmenwerken in zwölf Bereichen, darunter KI-Governance, Schutzmechanismen für KI-Agenten mit minimalen Berechtigungen und menschlicher Freigabe sowie Drittanbieterrisiken. Empfohlen wird, zwei bis drei kritische Lücken mit klarer Verantwortung zu schließen und nach drei bis sechs Monaten neu zu bewerten.",
+      "added": "2026-10-14",
+      "id": "2026-10-14-new-checklist-helps-cpas-manage-ai-cyber-risks"
     }
   ]
 }
