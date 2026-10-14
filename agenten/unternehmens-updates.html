@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Unternehmens Updates – Abschlusswerkstatt</title>
-<meta name="description" content="Der Agent Unternehmens Updates wertet Berichte und Meldungen ausgewählter Unternehmen für Bilanzierung und Kennzahlen aus.">
+<meta name="description" content="Anleitung: So richten Sie sich einen KI-Agenten ein, der interne und veröffentlichte Unternehmensinformationen auf mögliche Folgen für den Abschluss prüft, damit nichts übersehen wird.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
@@ -19,14 +19,221 @@
 <main id="main">
 <header class="ph">
   <h1 class="ph-title">Unternehmens Updates</h1>
-  <p class="ph-tag">Was die Abschlüsse anderer Unternehmen zeigen.</p>
-  <p class="status status-soon">In Vorbereitung</p>
+  <p class="ph-tag">Ihr eigener Agent, der Unternehmensmeldungen auf Folgen für den Abschluss prüft.</p>
+  <p class="status status-live">Anleitung</p>
 </header>
 
-<div class="prose">
-  <p>Der Agent verfolgt Geschäftsberichte, Quartalsmitteilungen und Ad-hoc-Meldungen ausgewählter Unternehmen.</p>
-  <p>Er hebt hervor, was für Bilanzierung und Kennzahlen relevant ist, etwa Wertminderungen, Unternehmenserwerbe oder geänderte Bilanzierungsmethoden.</p>
-</div>
+<article class="article">
+  <p class="lead">Diese Anleitung zeigt, wie Sie sich selbst einen Agenten einrichten, der laufend verfolgt, was in Ihrem Unternehmen geschieht, und jedes Ereignis darauf prüft, ob es sich im Abschluss niederschlagen könnte. Er arbeitet mit internen und veröffentlichten Informationen und wird mit Ihren eigenen Unterlagen auf Ihr Unternehmen zugeschnitten, zum Beispiel mit dem Konzernabschluss und Ihrer Abschluss-Checkliste.</p>
+  <p>Das Ziel ist nicht, Bilanzierungsfragen zu beantworten, sondern sicherzustellen, dass jede rechtzeitig gestellt wird. Der erste Teil gilt für jedes KI-Werkzeug, das Dokumente lesen, im Internet suchen und Aufgaben regelmäßig ausführen kann. Im zweiten Teil folgt die Umsetzung am Beispiel von Claude.</p>
+  <p class="article-meta">Stand: Oktober 2026 · Lesezeit etwa 13 Minuten</p>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 class="toc-h" id="toc-h">Inhalt</h2>
+    <ol class="toc-list">
+      <li><a href="#aufgabe">Was der Agent leisten soll</a></li>
+      <li><a href="#quellen">Die Quellen</a></li>
+      <li><a href="#unterlagen">Welche Unterlagen Sie bereitstellen</a></li>
+      <li><a href="#raster">Profil und Prüfraster</a></li>
+      <li><a href="#prompt">Der Prompt</a></li>
+      <li><a href="#rhythmus">Rhythmus und Stichtag</a></li>
+      <li><a href="#achten">Worauf Sie achten sollten</a></li>
+      <li><a href="#claude">Umsetzung in Claude</a></li>
+    </ol>
+  </nav>
+
+  <p class="part">Teil 1 · Unabhängig vom Werkzeug</p>
+
+  <section id="aufgabe" aria-labelledby="h-aufgabe">
+    <h2 id="h-aufgabe"><span class="h-no">01</span>Was der Agent leisten soll</h2>
+    <p>Die meisten Fehler im Abschluss entstehen nicht bei schwierigen Bilanzierungsfragen, sondern bei Sachverhalten, die das Rechnungswesen zu spät oder gar nicht erreichen: die Restrukturierung, die in einer Pressemitteilung angekündigt wurde, der Mietvertrag für einen neuen Standort, die Klage, von der nur die Rechtsabteilung weiß, oder die neu gegründete Tochtergesellschaft im Handelsregister.</p>
+    <p>Der Agent setzt genau dort an. Er liest, was seit dem letzten Lauf über Ihr Unternehmen veröffentlicht oder intern mitgeteilt wurde, ordnet jedem Ereignis die möglichen Folgen für Ansatz, Bewertung, Ausweis und Anhang zu und gleicht das mit Ihrem letzten Abschluss ab. Am Ende steht eine Prüfliste: was passiert ist, was es für den Abschluss bedeuten könnte, wer es klären sollte und bis wann.</p>
+    <p>Die fachliche Würdigung bleibt bei Ihnen. Der Agent ist eine zweite, unermüdliche Kontrolle, ob alles, was im Unternehmen passiert ist, auch auf Ihrem Tisch gelandet ist.</p>
+  </section>
+
+  <section id="quellen" aria-labelledby="h-quellen">
+    <h2 id="h-quellen"><span class="h-no">02</span>Die Quellen</h2>
+    <p>Die Quellen teilen sich in zwei Gruppen. Externe Quellen kann jedes Werkzeug mit Websuche durchsuchen. Interne Quellen erreicht der Agent nur, wenn er in der freigegebenen Umgebung Ihres Unternehmens läuft oder Sie ihm die Unterlagen geben.</p>
+    <h3>Veröffentlichte Quellen</h3>
+    <dl class="src">
+      <div><dt>Investor Relations</dt><dd>Ad-hoc-Mitteilungen, Pressemitteilungen, Präsentationen und Telefonkonferenzen zu den Finanzberichten, Prognoseänderungen, Unterlagen zur Hauptversammlung.</dd></div>
+      <div><dt><a href="https://www.unternehmensregister.de/">Unternehmensregister</a> und <a href="https://www.bundesanzeiger.de/">Bundesanzeiger</a></dt><dd>Kapitalmarktmitteilungen, offengelegte Abschlüsse der Tochtergesellschaften und Bekanntmachungen.</dd></div>
+      <div><dt><a href="https://www.handelsregister.de/">Handelsregister</a></dt><dd>Gründungen, Verschmelzungen, Kapitalmaßnahmen und Organwechsel bei Mutter- und Tochtergesellschaften.</dd></div>
+      <div><dt>Presse und Branchenmedien</dt><dd>Berichte über Ihr Unternehmen, wichtige Kunden, Lieferanten und Märkte, etwa zu Rechtsstreitigkeiten, Lieferausfällen oder Marktveränderungen.</dd></div>
+    </dl>
+    <h3>Interne Quellen</h3>
+    <dl class="src">
+      <div><dt>Mitteilungen</dt><dd>Intranet, Rundschreiben und Organisationsmitteilungen, etwa zu neuen Bereichen, Standorten oder Zuständigkeiten.</dd></div>
+      <div><dt>Gremien</dt><dd>Beschlüsse von Vorstand und Aufsichtsrat, soweit sie dem Rechnungswesen zugänglich sind.</dd></div>
+      <div><dt>Recht und Verträge</dt><dd>Neue oder geänderte wesentliche Verträge, Rechtsstreitigkeiten, Betriebsprüfungen und Zusagen.</dd></div>
+      <div><dt>Projekte</dt><dd>Laufende Vorhaben wie Erwerbe, Veräußerungen, Restrukturierungen, Refinanzierungen oder große IT-Projekte.</dd></div>
+    </dl>
+    <p class="note">Wenn nur ein Teil der Quellen zugänglich ist, starten Sie mit den veröffentlichten. Schon der Abgleich zwischen dem, was das Unternehmen dem Kapitalmarkt sagt, und dem, was im Abschluss steht, deckt erstaunlich viel auf.</p>
+  </section>
+
+  <section id="unterlagen" aria-labelledby="h-unterlagen">
+    <h2 id="h-unterlagen"><span class="h-no">03</span>Welche Unterlagen Sie bereitstellen</h2>
+    <p>Um zu erkennen, was neu ist und was es für den Abschluss bedeutet, braucht der Agent einen Ausgangspunkt. Dafür eignen sich vor allem die folgenden Unterlagen.</p>
+    <h3>Veröffentlichte Unterlagen</h3>
+    <ul class="docs">
+      <li><strong>Letzter Konzernabschluss oder Geschäftsbericht.</strong> Konsolidierungskreis, Bilanzierungsmethoden, Ermessensentscheidungen und Schätzungen, Eventualverbindlichkeiten, sonstige finanzielle Verpflichtungen und Ereignisse nach dem Stichtag. Das ist der Stand, gegen den der Agent jede Neuigkeit prüft.</li>
+      <li><strong>Letzter Zwischenbericht.</strong> Er zeigt, was sich seitdem bereits verändert hat.</li>
+      <li><strong>Prognose und Finanzkalender.</strong> Die zuletzt veröffentlichte Prognose und die Termine der nächsten Stichtage und Veröffentlichungen.</li>
+    </ul>
+    <h3>Interne Unterlagen</h3>
+    <ul class="docs">
+      <li><strong>Abschluss-Checkliste und Abschlusskalender.</strong> Damit kann der Agent jede Meldung einem Punkt Ihrer Checkliste zuordnen und Lücken aufzeigen.</li>
+      <li><strong>Beteiligungsliste.</strong> Alle Gesellschaften mit Anteilsquote und Einbeziehungsart, damit der Agent Meldungen über Tochtergesellschaften erkennt.</li>
+      <li><strong>Liste der zuletzt beurteilten Sachverhalte.</strong> Etwa die Bilanzierungsmemos des letzten Abschlusses. Der Agent meldet dann nur, was sich daran geändert hat.</li>
+      <li><strong>Wesentlichkeitsgrenzen und Zuständigkeiten.</strong> Ab welcher Größenordnung etwas relevant ist und wer im Rechnungswesen für welches Thema zuständig ist.</li>
+    </ul>
+    <p class="note">Interne Informationen über Erwerbe, Restrukturierungen oder Prognoseänderungen sind vor ihrer Veröffentlichung oft Insiderinformationen. Sie gehören ausschließlich in Werkzeuge, die Ihr Unternehmen dafür freigegeben hat, und die Ergebnisse des Agenten sind genauso vertraulich zu behandeln wie die Quellen.</p>
+  </section>
+
+  <section id="raster" aria-labelledby="h-raster">
+    <h2 id="h-raster"><span class="h-no">04</span>Profil und Prüfraster</h2>
+    <p>Wie beim Agenten für <a href="/agenten/ifrs-updates">IFRS Updates</a> verdichten Sie die Unterlagen einmal zu einem Profil von ein bis zwei Seiten: Konsolidierungskreis, wesentliche Bilanzierungsthemen, Stichtage, Wesentlichkeit und Zuständigkeiten. Die KI kann den Entwurf aus dem Geschäftsbericht erstellen, prüfen und ergänzen sollten Sie ihn selbst.</p>
+    <p>Das Herzstück ist aber das Prüfraster. Es sagt dem Agenten, welche Ereignisse typischerweise welche Folgen für den Abschluss haben. Die folgende Übersicht ist ein Ausgangspunkt nach IFRS, den Sie um die Besonderheiten Ihres Unternehmens ergänzen.</p>
+    <dl class="src map">
+      <div><dt>Erwerb von Unternehmen oder Anteilen</dt><dd>Beherrschung und Erstkonsolidierung, Kaufpreisallokation, bedingte Kaufpreise, Anhangangaben. <span class="std">IFRS 3, IFRS 10, IFRS 11, IAS 28</span></dd></div>
+      <div><dt>Verkauf, Schließung, Rückzug aus Geschäftsfeldern</dt><dd>Zur Veräußerung gehalten, aufgegebener Geschäftsbereich, Entkonsolidierung, Wertminderung. <span class="std">IFRS 5, IFRS 10, IAS 36</span></dd></div>
+      <div><dt>Restrukturierung, Stellenabbau, Standortschließung</dt><dd>Rückstellung erst bei detailliertem Plan und begründeter Erwartung der Betroffenen, Abfindungen, Wertminderung, Leasingverträge. <span class="std">IAS 37, IAS 19, IAS 36, IFRS 16</span></dd></div>
+      <div><dt>Gewinnwarnung, Prognosesenkung, Kurseinbruch</dt><dd>Anhaltspunkt für Wertminderung, Annahmen der Werthaltigkeitstests, latente Steueransprüche, Fortführung der Unternehmenstätigkeit. <span class="std">IAS 36, IAS 12</span></dd></div>
+      <div><dt>Neue Finanzierung, Refinanzierung, Kreditbedingungen</dt><dd>Modifikation oder Ausbuchung, Sicherungsbeziehungen, Einordnung als kurz- oder langfristig bei Kreditauflagen. <span class="std">IFRS 9, IFRS 7</span></dd></div>
+      <div><dt>Kapitalmaßnahmen, Aktienrückkauf, Dividende</dt><dd>Eigen- oder Fremdkapital, eigene Anteile, Dividendenbeschluss nach dem Stichtag. <span class="std">IAS 32, IAS 10</span></dd></div>
+      <div><dt>Rechtsstreit, Behördenverfahren, Betriebsprüfung</dt><dd>Rückstellung oder Eventualverbindlichkeit, unsichere Steuerpositionen. <span class="std">IAS 37, IFRIC 23, IAS 12</span></dd></div>
+      <div><dt>Neue Standorte, Miet- und Leasingverträge</dt><dd>Neue Leasingverhältnisse, Änderungen von Laufzeit und Optionen, Rückbauverpflichtungen. <span class="std">IFRS 16, IAS 37</span></dd></div>
+      <div><dt>Neue Produkte, Preismodelle, Kundenprogramme</dt><dd>Leistungsverpflichtungen, Zeitpunkt der Umsatzrealisierung, Kundenbindungsprogramme, Rücknahmerechte. <span class="std">IFRS 15</span></dd></div>
+      <div><dt>Vergütungs- und Pensionsänderungen</dt><dd>Neue aktienbasierte Programme, Planänderungen und Kürzungen bei Pensionen, Angaben zu nahestehenden Personen. <span class="std">IFRS 2, IAS 19, IAS 24</span></dd></div>
+      <div><dt>Organisation, Segmente, Berichtswege</dt><dd>Segmentabgrenzung, Zuordnung des Geschäfts- oder Firmenwerts zu zahlungsmittelgenerierenden Einheiten. <span class="std">IFRS 8, IAS 36</span></dd></div>
+      <div><dt>Große IT- und Digitalprojekte</dt><dd>Aktivierung von Entwicklungs- und Softwarekosten, Konfiguration und Anpassung von Cloud-Lösungen. <span class="std">IAS 38, IFRS-IC-Agenda-Entscheidung 2021</span></dd></div>
+      <div><dt>Länder, Währungen, Lieferketten</dt><dd>Hochinflation, Wechselkurse, Werthaltigkeit von Vorräten und Forderungen. <span class="std">IAS 29, IAS 21, IAS 2, IFRS 9</span></dd></div>
+      <div><dt>Ereignisse nach dem Stichtag</dt><dd>Wertaufhellend oder wertbegründend, Anpassung oder nur Anhangangabe. <span class="std">IAS 10</span></dd></div>
+    </dl>
+    <p>Neben dem Abschluss selbst prüft der Agent die Stimmigkeit: Stimmen Kennzahlen und Begriffe in Pressemitteilungen und Präsentationen mit dem Abschluss und dem Lagebericht überein, und sind alternative Leistungskennzahlen nach den ESMA-Leitlinien übergeleitet?</p>
+  </section>
+
+  <section id="prompt" aria-labelledby="h-prompt">
+    <h2 id="h-prompt"><span class="h-no">05</span>Der Prompt</h2>
+    <p>Der Prompt enthält das Prüfraster in kompakter Form, damit er ohne weitere Dateien funktioniert. Ersetzen Sie die eckigen Klammern durch Ihre Angaben, fügen Sie das Profil vollständig ein und ergänzen Sie das Raster um Ihre eigenen Themen.</p>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Prompt Unternehmens Updates</span><button class="copy" type="button" data-copy="tpl-prompt">Kopieren</button></figcaption>
+<pre id="tpl-prompt">ROLLE
+Du bist ein erfahrener IFRS-Experte und unterstützt das Konzernrechnungswesen von [Unternehmen] bei der Vorbereitung des nächsten Abschlusses zum [Stichtag]. Deine Aufgabe ist eine Vollständigkeitskontrolle: Du findest Ereignisse im Unternehmen, die sich auf den Abschluss auswirken könnten, damit keines übersehen wird. Die fachliche Würdigung trifft das Rechnungswesen.
+
+UNTERNEHMEN
+Grundlage ist das folgende Profil mit Konsolidierungskreis, wesentlichen Bilanzierungsthemen, Wesentlichkeit und Zuständigkeiten:
+[Profil einfügen]
+Als Ausgangsstand gilt der Konzernabschluss zum [letzter Stichtag] und, soweit bereitgestellt, die Abschluss-Checkliste und die Liste der zuletzt beurteilten Sachverhalte.
+
+ZEITRAUM
+Berücksichtige Ereignisse und Veröffentlichungen vom [Datum] bis heute. Nenne bei jedem Punkt das Datum.
+
+QUELLEN
+1. Veröffentlichungen des Unternehmens: Ad-hoc-Mitteilungen, Pressemitteilungen, Präsentationen, Finanzberichte, Unterlagen zur Hauptversammlung ([IR-Website])
+2. Unternehmensregister, Bundesanzeiger und Handelsregister für die Mutter- und alle Tochtergesellschaften aus dem Profil
+3. Presse- und Branchenberichte über das Unternehmen, wesentliche Kunden und Lieferanten
+4. Interne Unterlagen, soweit bereitgestellt: [Mitteilungen, Beschlüsse, Verträge, Projektliste]
+Stütze jede Aussage auf eine konkrete Quelle mit Link oder Dokumentname.
+
+PRÜFRASTER
+Prüfe jedes Ereignis mindestens auf diese Zusammenhänge:
+- Erwerb von Unternehmen oder Anteilen: IFRS 3, IFRS 10, IFRS 11, IAS 28
+- Verkauf, Schließung, Rückzug aus Geschäftsfeldern: IFRS 5, Entkonsolidierung, IAS 36
+- Restrukturierung, Stellenabbau, Standortschließung: IAS 37 (Ansatzkriterien für Restrukturierungsrückstellungen), IAS 19, IAS 36, IFRS 16
+- Gewinnwarnung, Prognosesenkung, Kurseinbruch: Anhaltspunkt für Wertminderung nach IAS 36, latente Steueransprüche nach IAS 12, Fortführung der Unternehmenstätigkeit
+- Finanzierung und Kreditbedingungen: IFRS 9 (Modifikation, Ausbuchung, Sicherungsbeziehungen), Einordnung kurz- oder langfristig, IFRS 7
+- Kapitalmaßnahmen, Aktienrückkauf, Dividende: IAS 32, IAS 10
+- Rechtsstreit, Behördenverfahren, Betriebsprüfung: IAS 37, IFRIC 23, IAS 12
+- Neue Standorte, Miet- und Leasingverträge: IFRS 16, Rückbauverpflichtungen nach IAS 37
+- Neue Produkte, Preismodelle, Kundenprogramme: IFRS 15
+- Vergütung und Pensionen: IFRS 2, IAS 19, IAS 24
+- Organisation und Segmente: IFRS 8, Zuordnung des Geschäfts- oder Firmenwerts nach IAS 36
+- IT- und Digitalprojekte: IAS 38, Cloud-Lösungen
+- Länder, Währungen, Lieferketten: IAS 29, IAS 21, IAS 2, IFRS 9
+- Ereignisse nach dem Stichtag: IAS 10
+[eigene Themen ergänzen]
+Prüfe außerdem, ob Kennzahlen und Aussagen in Veröffentlichungen mit dem letzten Abschluss und Lagebericht übereinstimmen.
+
+ABGLEICH
+Prüfe für jedes Ereignis, ob es im letzten Abschluss, in der Checkliste oder in den beurteilten Sachverhalten bereits berücksichtigt ist. Kennzeichne es als „neu“, „verändert“ oder „bereits berücksichtigt“.
+
+AUSGABE
+Beginne mit einer Zusammenfassung in höchstens drei Sätzen. Gib dann eine Prüfliste aus, sortiert nach Dringlichkeit:
+- Ereignis mit Datum und Quelle
+- Betroffene Gesellschaft
+- Mögliche Auswirkung auf Ansatz, Bewertung, Ausweis, Anhang oder Lagebericht mit den einschlägigen Standards
+- Status: neu, verändert oder bereits berücksichtigt
+- Offene Fragen, die zu klären sind, und an wen (laut Zuständigkeiten im Profil)
+- Dringlichkeit: hoch (betrifft den nächsten Stichtag und ist voraussichtlich wesentlich), mittel, niedrig
+Führe Ereignisse ohne erkennbare Abschlussrelevanz am Ende in einer Zeile auf, damit sichtbar ist, dass sie geprüft wurden.
+
+GRENZEN
+- Erfinde keine Ereignisse, Daten oder Quellen. Ist etwas unklar, formuliere es als offene Frage.
+- Melde im Zweifel lieber ein Ereignis zu viel als eines zu wenig.
+- Gib keine abschließende bilanzielle Beurteilung ab, sondern benenne die Fragen, die zu prüfen sind.
+- Behandle alle internen Informationen vertraulich und gib sie nicht in Suchanfragen weiter.</pre>
+    </figure>
+    <p>Die Ausgabe ist eine Prüfliste, die Sie direkt in Ihre Abschlussplanung übernehmen können. Abgelegt dient sie zugleich als Nachweis, dass Sie die Vollständigkeit der Sachverhalte systematisch geprüft haben.</p>
+  </section>
+
+  <section id="rhythmus" aria-labelledby="h-rhythmus">
+    <h2 id="h-rhythmus"><span class="h-no">06</span>Rhythmus und Stichtag</h2>
+    <p>Ein wöchentlicher Lauf über die Ereignisse der letzten sieben Tage hält die Liste aktuell und verteilt die Arbeit über das Quartal, statt sie in die Abschlusswochen zu drängen.</p>
+    <p>Zusätzlich lohnt sich ein Stichtagslauf: kurz nach dem Quartals- oder Jahresstichtag über den gesamten Zeitraum seit dem letzten Abschluss und noch einmal unmittelbar vor der Aufstellung, um Ereignisse nach dem Stichtag zu erfassen. Für diesen Lauf ändern Sie nur den Zeitraum im Prompt.</p>
+  </section>
+
+  <section id="achten" aria-labelledby="h-achten">
+    <h2 id="h-achten"><span class="h-no">07</span>Worauf Sie achten sollten</h2>
+    <ul class="docs">
+      <li><strong>Vertraulichkeit und Insiderrecht.</strong> Interne Informationen nur in freigegebene Werkzeuge. Achten Sie darauf, dass interne Inhalte nicht in Websuchen einfließen, und behandeln Sie die Ergebnisse wie die Quellen.</li>
+      <li><strong>Vollständigkeit hat Grenzen.</strong> Der Agent findet nur, was veröffentlicht ist oder was Sie ihm geben. Was nur mündlich besprochen wurde, bleibt ihm verborgen. Er ergänzt Ihre Abfragen bei Fachabteilungen und Tochtergesellschaften, er ersetzt sie nicht.</li>
+      <li><strong>Lieber zu viel als zu wenig.</strong> Ein gemeldetes Ereignis ohne Folgen kostet eine Minute. Ein übersehenes kostet im schlimmsten Fall eine Korrektur. Stellen Sie den Agenten entsprechend ein und filtern Sie selbst.</li>
+      <li><strong>Fundstellen prüfen.</strong> KI kann Inhalte und Zusammenhänge erfinden. Prüfen Sie jedes Ereignis in der genannten Quelle, bevor Sie daraus etwas ableiten.</li>
+      <li><strong>Tochtergesellschaften nicht vergessen.</strong> Viele Ereignisse mit Abschlussfolgen finden in Tochtergesellschaften statt und tauchen nie in einer Konzernmeldung auf. Die Beteiligungsliste im Profil ist deshalb Pflicht.</li>
+      <li><strong>Verantwortung.</strong> Der Agent erstellt eine Prüfliste. Ob und wie ein Ereignis im Abschluss abzubilden ist, entscheidet weiterhin das Rechnungswesen.</li>
+    </ul>
+  </section>
+
+  <p class="part">Teil 2 · Beispiel</p>
+
+  <section id="claude" aria-labelledby="h-claude">
+    <h2 id="h-claude"><span class="h-no">08</span>Umsetzung in Claude</h2>
+    <p>Claude kann Dokumente in Projekten vorhalten, im Internet suchen, über Konnektoren auf freigegebene Ablagen und Postfächer zugreifen und Aufgaben nach Zeitplan ausführen. Andere Werkzeuge funktionieren ähnlich. Die Bezeichnungen der Oberfläche können sich je nach Version und Sprache unterscheiden.</p>
+    <ol class="steps">
+      <li>
+        <h3>Projekt anlegen und Unterlagen hochladen</h3>
+        <p>Legen Sie unter „Projects“ ein neues Projekt an, zum Beispiel „Unternehmens Updates“. Laden Sie den letzten Konzernabschluss, den Zwischenbericht und, wenn Ihr Unternehmen das Werkzeug dafür freigegeben hat, Abschluss-Checkliste und Beteiligungsliste in das Projektwissen hoch.</p>
+      </li>
+      <li>
+        <h3>Profil erstellen lassen</h3>
+        <p>Bitten Sie Claude in einem Chat innerhalb des Projekts, das Profil zu erstellen. Prüfen und ergänzen Sie es, besonders Konsolidierungskreis, Wesentlichkeit und Zuständigkeiten.</p>
+        <figure class="prompt">
+          <figcaption class="prompt-bar"><span>Prompt für das Profil</span><button class="copy" type="button" data-copy="tpl-entwurf">Kopieren</button></figcaption>
+<pre id="tpl-entwurf">Erstelle aus den hochgeladenen Unterlagen ein Profil für die Vollständigkeitskontrolle des Abschlusses mit diesen Abschnitten: Unternehmen und Stichtage, Konsolidierungskreis (alle Gesellschaften mit Anteil und Einbeziehungsart), wesentliche Bilanzierungsthemen mit Größenordnung, wesentliche Ermessensentscheidungen und Schätzungen, Eventualverbindlichkeiten und sonstige Verpflichtungen, zuletzt beurteilte Sachverhalte. Übernimm nur Angaben aus den Unterlagen und nenne jeweils die Seite. Markiere Lücken mit [offen]. Wesentlichkeit und Zuständigkeiten ergänze ich selbst.</pre>
+        </figure>
+      </li>
+      <li>
+        <h3>Rückwirkend testen</h3>
+        <p>Der beste Test ist ein Blick zurück: Lassen Sie den Agenten den Zeitraum des letzten abgeschlossenen Quartals prüfen und vergleichen Sie seine Prüfliste mit dem, was tatsächlich im Abschluss gelandet ist. Fehlt ihm etwas, ergänzen Sie Quellen oder Prüfraster. Meldet er zu viel Unwichtiges, schärfen Sie die Wesentlichkeit nach.</p>
+      </li>
+      <li>
+        <h3>Als geplante Aufgabe einrichten</h3>
+        <p>Öffnen Sie in der Seitenleiste „Scheduled“, wählen Sie „New task“ und richten Sie die Aufgabe manuell ein. Fügen Sie den vollständigen Prompt mit Profil ein, setzen Sie den Zeitraum auf die letzten sieben Tage und wählen Sie „Weekly“. Interne Quellen bindet die Aufgabe über die Konnektoren ein, die in Ihrem Zugang verbunden sind. Den Stichtagslauf starten Sie bei Bedarf von Hand mit dem längeren Zeitraum.</p>
+      </li>
+      <li>
+        <h3>Prüfliste in die Abschlussplanung übernehmen</h3>
+        <p>Übernehmen Sie Punkte mit hoher Dringlichkeit direkt in Ihre Abschluss-Checkliste und verteilen Sie die offenen Fragen an die Zuständigen. Ergänzen Sie geklärte Sachverhalte in der Liste der beurteilten Sachverhalte, damit der Agent sie beim nächsten Lauf als berücksichtigt erkennt.</p>
+      </li>
+    </ol>
+    <p class="note">Für interne Unterlagen sollten Sie einen Zugang nutzen, den Ihr Unternehmen freigegeben hat. Die Unternehmenstarife Team und Enterprise unterliegen den gewerblichen Bedingungen, dort werden Eingaben nicht für das Training genutzt. Bei den privaten Tarifen entscheiden Sie in den Datenschutzeinstellungen selbst darüber, interne Unternehmensinformationen gehören dort aber grundsätzlich nicht hinein.</p>
+  </section>
+
+  <section class="close" aria-label="Fazit">
+    <p>Ein Agent dieser Art ersetzt keine Abfrage bei den Fachabteilungen und keine Würdigung. Er sorgt dafür, dass die richtigen Fragen rechtzeitig gestellt werden. Gerade in den Wochen vor dem Stichtag, wenn die Zeit knapp ist, gibt das die Sicherheit, nichts Wesentliches übersehen zu haben.</p>
+    <p>Fragen und Erfahrungen mit dem eigenen Agenten nehme ich gern unter <a href="mailto:oliver.waetjen@abschlusswerkstatt.de">oliver.waetjen@abschlusswerkstatt.de</a> entgegen.</p>
+  </section>
+</article>
 
 <nav class="index" aria-labelledby="ix-weitere">
   <h2 class="index-h" id="ix-weitere">Weitere Agenten</h2>

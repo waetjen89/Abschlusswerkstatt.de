@@ -405,6 +405,11 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .src dt a { color: var(--paper); }
 .src dd { margin: 0; font-size: 16px !important; line-height: 1.55 !important; color: #cfcdc7 !important; }
 
+.src.map > div { grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); }
+.src.map dt { font-size: 16px; }
+.article .src + p { margin-top: 26px; }
+.std { display: block; margin-top: 6px; font-size: 13px; letter-spacing: .01em; color: var(--pencil); font-variant-numeric: tabular-nums; }
+
 .docs { margin: 0 0 1em; padding: 0; list-style: none; }
 .docs li { position: relative; padding: 0 0 0 22px; margin: 0 0 14px; }
 .docs li::before { content: ""; position: absolute; left: 2px; top: .72em; width: 9px; height: 1px; background: var(--paper); opacity: .6; }
@@ -445,7 +450,7 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 
 @media (max-width: 600px) {
   .toc-list { columns: 1; }
-  .src > div { grid-template-columns: minmax(0, 1fr); }
+  .src > div, .src.map > div { grid-template-columns: minmax(0, 1fr); }
   .article p, .article li { font-size: 17px; }
   .steps > li { padding-left: 46px; }
 }

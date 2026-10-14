@@ -114,7 +114,7 @@ def components(today):
         ("06:00", "IFRS Updates", "/agenten/ifrs-updates",
          "IASB, IFRS Interpretations Committee und EFRAG gesichtet, Neuerungen kurz eingeordnet."),
         ("06:30", "Unternehmens Updates", "/agenten/unternehmens-updates",
-         "Neue Berichte und Meldungen der beobachteten Unternehmen ausgewertet."),
+         "Neue Meldungen aus dem eigenen Unternehmen auf Folgen für den Abschluss geprüft."),
     ]
     shift = ['<ol class="shift" aria-label="Beispielhafter Morgen mit drei Agenten">']
     for time, name, href, text in shift_items:
