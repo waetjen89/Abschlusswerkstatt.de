@@ -157,7 +157,7 @@ def components(today):
         f'<li>{ICON_TICK}<div><strong>{a}</strong><span>{b}</span></div></li>' for a, b in checks_items) + '</ul>'
 
     sig = (f'<div class="sig"><p class="sig-place">Langwedel, im {MONTHS[today.month - 1]} {today.year}</p>'
-           '<p class="sig-name">Oliver Wätjen</p></div>')
+           '<p class="sig-name">Dr. Oliver Wätjen</p></div>')
 
     return {
         "SHIFT": "".join(shift),
@@ -299,7 +299,7 @@ def footer(today):
     for it in NAV:
         if "children" in it:
             cols.append((it["label"], it["children"]))
-    cols.append(("Über mich", [("Oliver Wätjen", "/ueber-mich"), ("E-Mail schreiben", f"mailto:{MAIL}")]))
+    cols.append(("Über mich", [("Dr. Oliver Wätjen", "/ueber-mich"), ("E-Mail schreiben", f"mailto:{MAIL}")]))
     cols.append(("Rechtliches", [("Impressum", "/rechtliches#impressum"), ("Datenschutz", "/rechtliches#datenschutz")]))
     colhtml = "".join(
         f'<div class="gf-col"><p class="gf-h">{esc(h)}</p><ul>'
@@ -310,7 +310,7 @@ def footer(today):
         '<p class="gf-note">Die Inhalte dieser Website dienen der Information und ersetzen keine Bilanzierungs-, '
         'Steuer- oder Rechtsberatung. Berechnungen ohne Gewähr.</p>'
         f'<nav class="gf-map" aria-label="Seitenübersicht">{colhtml}</nav>'
-        f'<div class="gf-legal"><p>© {today.year} Oliver Wätjen. {SITE}</p>'
+        f'<div class="gf-legal"><p>© {today.year} Dr. Oliver Wätjen. {SITE}</p>'
         '<ul><li><a href="/rechtliches#impressum">Impressum</a></li>'
         '<li><a href="/rechtliches#datenschutz">Datenschutz</a></li></ul></div>'
         '</div></footer>')
