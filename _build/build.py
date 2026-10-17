@@ -35,8 +35,8 @@ NAV = [
     {
         "key": "analysen", "label": "Analysen", "href": "/analysen/",
         "explore": "Analysen entdecken",
-        "blurb": "Fachliche Analysen zu Bilanzierungsfragen mit Gewicht, zuerst zu Unternehmenserwerben.",
-        "children": [("Übersicht", "/analysen/"), ("M&A", "/analysen/m-und-a")],
+        "blurb": "Fachliche Analysen zu Bilanzierungsfragen mit Gewicht und dazu, wie KI dabei hilft.",
+        "children": [("Übersicht", "/analysen/"), ("IFRS 10", "/analysen/ifrs-10"), ("M&A", "/analysen/m-und-a")],
     },
     {
         "key": "tools", "label": "Tools", "href": "/tools/",

@@ -1,0 +1,234 @@
+<!--
+title: IFRS 10 und KI
+description: Wo KI bei der Beurteilung von Beherrschung nach IFRS 10 hilft: Gesellschaftervereinbarungen, Term Sheets, Franchiseverträge, Optionen und Memos. Mit Prompts, Risiken und sinnvollen Kontrollen.
+section: analysen
+-->
+<header class="ph">
+  <h1 class="ph-title">IFRS 10 und KI</h1>
+  <p class="ph-tag">Beherrschung beurteilen und gestalten, mit KI und der nötigen Kontrolle.</p>
+  <p class="status status-live">Artikel</p>
+</header>
+
+<article class="article">
+  <p class="lead">Ob ein Unternehmen ein anderes beherrscht, steht selten in einer einzigen Zahl. Es ergibt sich aus Rechten, die über Gesellschaftervereinbarungen, Satzungen, Geschäftsordnungen, Optionen und Nebenabreden verteilt sind. Genau diese Textarbeit kann KI gut unterstützen. Gleichzeitig ist IFRS 10 ein Standard, bei dem eine plausibel klingende, aber falsche Aussage teuer wird.</p>
+  <p>Dieser Beitrag zeigt, wo sich KI bei Beherrschungsfragen in der Praxis bewährt, wie man dabei vorgeht und welche Kontrollen nötig sind. Die Beispiele beruhen auf eigenen Anwendungen und sind vereinfacht und anonymisiert.</p>
+  <p class="article-meta">Reihe: KI in der IFRS-Praxis · Stand: Oktober 2026 · Lesezeit etwa 14 Minuten</p>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <h2 class="toc-h" id="toc-h">Inhalt</h2>
+    <ol class="toc-list">
+      <li><a href="#warum">Warum IFRS 10 sich für KI eignet</a></li>
+      <li><a href="#schema">Das Prüfschema in Kürze</a></li>
+      <li><a href="#analysieren">Verträge analysieren</a></li>
+      <li><a href="#gestalten">Verträge gestalten</a></li>
+      <li><a href="#dokumentieren">Dokumentieren und überwachen</a></li>
+      <li><a href="#prompts">Prompts</a></li>
+      <li><a href="#risiken">Worauf Sie achten sollten</a></li>
+      <li><a href="#kontrollen">Kontrollen, die sich bewähren</a></li>
+    </ol>
+  </nav>
+
+  <section id="warum" aria-labelledby="h-warum">
+    <h2 id="h-warum"><span class="h-no">01</span>Warum IFRS 10 sich für KI eignet</h2>
+    <p>Die Beurteilung von Beherrschung ist zu einem großen Teil Lesearbeit. Wer entscheidet über das Budget? Wer bestellt die Geschäftsführung? Welche Beschlüsse brauchen die Zustimmung der anderen Seite, und was passiert, wenn sie verweigert wird? Die Antworten stehen verstreut in mehreren Dokumenten, oft in mehreren Fassungen und mit Verweisen auf Anlagen.</p>
+    <p>KI kann diese Rechte schnell zusammentragen, in eine Übersicht bringen, Widersprüche zwischen Dokumenten aufzeigen und Fassungen vergleichen. Sie kann außerdem Entscheidungssituationen durchspielen, an die man beim ersten Lesen nicht denkt.</p>
+    <p>Die Grenze liegt bei der Würdigung. Welche Tätigkeiten die Rendite wesentlich beeinflussen und ob ein Recht substanziell ist, ist eine Ermessensfrage, die Kenntnis des Geschäfts verlangt. Und eine KI, die eine Klausel zusammenfasst, kann ihr unbemerkt einen Inhalt zuschreiben, den sie nicht hat.</p>
+  </section>
+
+  <section id="schema" aria-labelledby="h-schema">
+    <h2 id="h-schema"><span class="h-no">02</span>Das Prüfschema in Kürze</h2>
+    <p>Damit KI sinnvoll eingesetzt werden kann, muss die Fragestellung sauber zerlegt sein. Nach IFRS 10.7 beherrscht ein Investor ein Beteiligungsunternehmen, wenn drei Voraussetzungen zusammen erfüllt sind:</p>
+    <dl class="src">
+      <div><dt>Verfügungsgewalt</dt><dd>Bestehende Rechte, die die gegenwärtige Fähigkeit verleihen, die relevanten Tätigkeiten zu lenken, also die Tätigkeiten, die die Rendite wesentlich beeinflussen. Maßgeblich ist das Recht, nicht seine tatsächliche Ausübung. <span class="std">IFRS 10.10–12, B9–B28</span></dd></div>
+      <div><dt>Variable Rückflüsse</dt><dd>Der Investor ist schwankenden Rückflüssen aus seinem Engagement ausgesetzt, etwa Dividenden, Wertänderungen oder Synergien. <span class="std">IFRS 10.15–16, B55–B57</span></dd></div>
+      <div><dt>Verknüpfung</dt><dd>Der Investor kann seine Verfügungsgewalt nutzen, um die Höhe der Rückflüsse zu beeinflussen, und handelt nicht nur als Agent für andere. <span class="std">IFRS 10.17–18, B58–B72</span></dd></div>
+    </dl>
+    <p>Für die Vertragsanalyse sind vor allem diese Unterscheidungen wichtig: substanzielle Rechte gegenüber reinen Schutzrechten (B22–B28), Rechte aus Franchiseverträgen (B29–B33), Beherrschung ohne Stimmrechtsmehrheit (B38–B46), potenzielle Stimmrechte wie Kaufoptionen (B47–B50) und die laufende Neubeurteilung, wenn sich Tatsachen ändern (B80–B85). Entscheidet keine Partei allein, sondern nur alle gemeinsam, liegt möglicherweise gemeinsame Beherrschung nach IFRS 11 vor.</p>
+  </section>
+
+  <section id="analysieren" aria-labelledby="h-analysieren">
+    <h2 id="h-analysieren"><span class="h-no">03</span>Verträge analysieren</h2>
+
+    <h3>Gesellschaftervereinbarung beurteilen</h3>
+    <p>Der wichtigste Anwendungsfall. Die KI erhält Gesellschaftervereinbarung, Satzung und Geschäftsordnungen und baut daraus eine Rechte-Matrix: Für jede relevante Tätigkeit wird festgehalten, wer entscheidet, wo das geregelt ist, wessen Zustimmung nötig ist und welche Hürden die Ausübung behindern können. Entscheidend ist, die Rechte zu gewichten statt zu zählen. Drei Zustimmungsvorbehalte zu Nebenthemen wiegen weniger als das alleinige Recht, Budget und Geschäftsplan festzulegen.</p>
+    <figure class="matrix" role="group" aria-labelledby="mx-cap">
+      <div class="matrix-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">Relevante Tätigkeit</th><th scope="col">Entscheidung bei</th><th scope="col">Fundstelle</th><th scope="col">Hürden</th><th scope="col">Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Budget und Geschäftsplan</td><td>Board, Stichentscheid Käuferin ab Stichtag</td><td>Anlage B, Nr. 1</td><td>Quorum, Einberufung</td><td><span class="tag">belegt</span></td></tr>
+            <tr><td>Bestellung und Abberufung der Geschäftsführung</td><td>Nominierung Käuferin, Bestellung durch Board</td><td>§ 7.2</td><td>Zustimmung Verkäuferin unklar</td><td><span class="tag tag-open">offen</span></td></tr>
+            <tr><td>Investitionen über Schwellenwert</td><td>gemeinsam laut Anlage A, allein laut Anlage B</td><td>Anlage A, Nr. 4; Anlage B, Nr. 3</td><td>keine Vorrangregel</td><td><span class="tag tag-warn">widersprüchlich</span></td></tr>
+            <tr><td>Kapitalmaßnahmen, Satzungsänderungen</td><td>einstimmig</td><td>§ 9.1</td><td>–</td><td><span class="tag">Schutzrecht</span></td></tr>
+            <tr><td>Kaufoption auf weitere Anteile</td><td>Käuferin</td><td>§ 12</td><td>Ausübungsfenster, Preisformel</td><td><span class="tag tag-open">eigene Würdigung</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="mx-cap">Vereinfachte Rechte-Matrix. Fundstellen und Inhalte sind fiktiv.</figcaption>
+    </figure>
+
+    <h3>Franchise- und Kooperationsverträge</h3>
+    <p>Franchisegeber und enge Kooperationspartner haben oft weitreichende Rechte: Markenstandards, Prüfungsrechte, Kündigungsrechte. IFRS 10 behandelt solche Rechte in der Regel als Schutzrechte des Markeninhabers (B29–B33). Die KI kann sauber trennen, welche Klauseln die Marke schützen und welche tatsächlich in Budget, Standorte, Personal, Preise oder Finanzierung eingreifen. Eine wirtschaftlich enge Beziehung ist nicht dasselbe wie Steuerungsbefugnis. Hilfreich ist, nicht nach dem Namen einer Klausel zu fragen, sondern nach dem konkreten Entscheidungsfall: Wer entscheidet, wer muss zustimmen, und wie wird die Entscheidung umgesetzt?</p>
+
+    <h3>Optionen und potenzielle Stimmrechte</h3>
+    <p>Kauf- und Verkaufsoptionen, Wandelrechte oder gestufte Erwerbe werfen die Frage auf, ob ein künftiges Recht schon heute Verfügungsgewalt vermittelt. Die KI kann Ausübungsbedingungen, Fristen, Preisformeln und Hindernisse zusammentragen, die nach B23 gegen ein substanzielles Recht sprechen. Die Beurteilung, ob die Option wirtschaftlich sinnvoll ausübbar ist, bleibt eine eigene Würdigung. Ein späteres Kaufrecht ist für sich genommen noch kein Nachweis heutiger Beherrschung.</p>
+
+    <h3>Minderheitsbeteiligung und faktische Beherrschung</h3>
+    <p>Hält ein Investor weniger als die Hälfte der Stimmrechte, kommt es auf die Verteilung der übrigen Anteile und auf frühere Abstimmungsmuster an (B41–B45). Aus veröffentlichten Abstimmungsergebnissen und Präsenzen der Hauptversammlungen der letzten Jahre kann die KI eine Übersicht erstellen, die zeigt, ob die eigene Beteiligung regelmäßig für eine Mehrheit der anwesenden Stimmen gereicht hätte.</p>
+
+    <h3>Strukturierte Einheiten</h3>
+    <p>Bei Objektgesellschaften, Fonds oder Verbriefungen spielen Stimmrechte kaum eine Rolle. Hier kommt es auf Zweck und Gestaltung an (B5–B8, B51–B54): Wofür wurde die Einheit gegründet, welche Entscheidungen fallen nach der Gründung überhaupt noch an, und wer trägt die Risiken? Die KI kann aus umfangreichen Vertragswerken diese Fragen strukturiert beantworten und die Fundstellen liefern.</p>
+  </section>
+
+  <section id="gestalten" aria-labelledby="h-gestalten">
+    <h2 id="h-gestalten"><span class="h-no">04</span>Verträge gestalten</h2>
+
+    <h3>Term Sheet so strukturieren, dass Beherrschung ab einem Stichtag entsteht</h3>
+    <p>Ein typischer Fall bei Unternehmenserwerben in Stufen: Die Käuferin hält zunächst zum Beispiel 49 Prozent und soll ab einem bestimmten Datum Beherrschung erlangen, auch wenn sie die Mehrheit der Anteile erst später erwirbt. Die KI hilft hier als Strukturierungs- und Formulierungshilfe:</p>
+    <ul class="docs">
+      <li><strong>Rechtswechsel als Ablauf beschreiben.</strong> Wer hat vor dem Stichtag welches Recht, wodurch tritt der Wechsel ein, und wer kann danach welche Entscheidung treffen?</li>
+      <li><strong>Entscheidungskatalog an den relevanten Tätigkeiten ausrichten.</strong> Ein präzise formulierter Katalog hilft nicht, wenn er für die Rendite nachrangige Themen erfasst.</li>
+      <li><strong>Stichentscheide durchdenken.</strong> Braucht es zuerst eine ordnungsgemäße Abstimmung und ein Patt? Können Quorum, Einberufung oder Nichtteilnahme den Weg zur Entscheidung blockieren?</li>
+      <li><strong>Vor und nach dem Stichtag durchspielen.</strong> Streit im Board, ein abwesendes Mitglied, eine nicht rechtzeitig vorgenommene Bestellung.</li>
+    </ul>
+    <p>Dabei lohnt der Blick auf die Folgen der Struktur. Ein Board mit gleich vielen Sitzen für beide Seiten und ohne Stichentscheid führt eher zu gemeinsamer Beherrschung als zu Beherrschung durch eine Seite. Der Zeitpunkt, ab dem Beherrschung besteht, ist der Erwerbszeitpunkt nach IFRS 3. Ab dann wird konsolidiert, und bereits gehaltene Anteile werden zum beizulegenden Zeitwert neu bewertet. Umgekehrt müssen Rechte nicht in jedem Moment ausübbar sein, sondern dann, wenn über die relevanten Tätigkeiten zu entscheiden ist (B24). Das kann Beherrschung früher begründen als beabsichtigt.</p>
+    <p class="note">Werden der Käuferin vor dem Vollzug Steuerungsrechte eingeräumt, ist zusätzlich das Fusionskontrollrecht zu prüfen. Ist der Erwerb anmeldepflichtig, darf er vor der Freigabe nicht vollzogen werden, und vorgezogene Steuerungsrechte können als Vollzug gelten. Das gehört in die juristische Prüfung, nicht in den KI-Entwurf.</p>
+
+    <h3>Fassungen vergleichen</h3>
+    <p>Term Sheets und Gesellschaftervereinbarungen ändern sich in der Verhandlung oft grundlegend, etwa von einer Sitzmehrheit im Board zu alleinigen Rechten in einer Anlage. Die KI kann jede Änderung zwischen zwei Fassungen auflisten und die Rechte-Matrix aktualisieren. Wichtig ist, dass sie Schlussfolgerungen aus einer älteren Fassung nicht in die neue übernimmt, sondern jede Aussage erneut prüft.</p>
+  </section>
+
+  <section id="dokumentieren" aria-labelledby="h-dokumentieren">
+    <h2 id="h-dokumentieren"><span class="h-no">05</span>Dokumentieren und überwachen</h2>
+
+    <h3>Frühere Beurteilungen gegen aktuelle Verträge prüfen</h3>
+    <p>Bilanzierungsmemos, Stellungnahmen und Antworten auf Fragen von Prüfern oder Dritten beschreiben eine Governance zu einem bestimmten Zeitpunkt. Dass eine Begründung früher verwendet wurde, macht sie weder aktuell noch richtig. Die KI kann jede Tatsachenbehauptung eines solchen Dokuments gegen die aktuellen Verträge prüfen und als bestätigt, eingeschränkt, widersprüchlich oder nicht nachweisbar einstufen. Getrennte Spalten für das tatsächlich vereinbarte Recht und die daraus gezogene Schlussfolgerung zeigen, wo eine frühere Beschreibung einem Prüfungsrecht mehr zuschreibt, als es hergibt.</p>
+
+    <h3>Memo und Kommunikation</h3>
+    <p>Aus der Rechte-Matrix kann die KI einen Memoentwurf und eine Vorlage für Vorstand oder Abschlussprüfer erstellen, etwa als Gegenüberstellung von Ist und Soll mit den nötigen Vertragsänderungen. Die Matrix bleibt der Beleg für die Einzelheiten, die Kurzfassung transportiert Kernaussage, nötige Schritte und offene Voraussetzungen.</p>
+
+    <h3>Laufende Neubeurteilung</h3>
+    <p>Beherrschung ist neu zu beurteilen, wenn sich Tatsachen ändern (B80–B85): neue Vereinbarungen, ausgeübte oder verfallene Optionen, veränderte Stimmrechtsverhältnisse, Organwechsel. Ein Agent, der Unternehmensmeldungen auf solche Ereignisse prüft, ist im Beitrag <a href="/agenten/unternehmens-updates">Unternehmens Updates</a> beschrieben.</p>
+
+    <h3>Prozessanleitungen für die Kapitalkonsolidierung</h3>
+    <p>Neben der Beurteilung selbst hilft KI, verteiltes Prozesswissen in eine Arbeitsanleitung zu bringen: von der Auswertung der Beteiligungsbewegungen über Kapitalmaßnahmen und Anteilsveränderungen bis zur Abstimmung von Geschäfts- oder Firmenwert, Rücklagen, Währungsdifferenzen und nicht beherrschenden Anteilen. Eine solche Anleitung ist zunächst ein Entwurf. Sie muss an der tatsächlichen Systemumgebung, an Konzernrichtlinie und Freigabewegen geprüft werden, bevor sie als Arbeitsanweisung gilt.</p>
+  </section>
+
+  <section id="prompts" aria-labelledby="h-prompts">
+    <h2 id="h-prompts"><span class="h-no">06</span>Prompts</h2>
+    <p>Bewährt hat sich eine feste Reihenfolge: erst die Rechte-Matrix mit Fundstellen, dann Gegenbeispiele und Blockadeszenarien, erst danach Formulierungsvorschläge. Nach jeder Vertragsänderung wird dieselbe Matrix aktualisiert. Die folgenden Prompts setzen das um. Ersetzen Sie die eckigen Klammern durch Ihre Angaben.</p>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Rechte-Matrix</span><button class="copy" type="button" data-copy="p-matrix">Kopieren</button></figcaption>
+<pre id="p-matrix">Analysiere die beigefügten Dokumente [Gesellschaftervereinbarung, Satzung, Geschäftsordnungen] zu [Gesellschaft] im Hinblick auf Beherrschung nach IFRS 10.
+
+1. Beschreibe Zweck und Gestaltung der Gesellschaft und leite die relevanten Tätigkeiten ab, also die Tätigkeiten, die die Rendite wesentlich beeinflussen. Begründe die Auswahl.
+2. Erstelle eine Rechte-Matrix mit diesen Spalten: relevante Tätigkeit, entscheidende Partei oder Organ, Fundstelle mit wörtlichem Textanker, Zustimmungs- und Mitwirkungserfordernisse, Hürden bei der Ausübung (Quorum, Einberufung, Fristen, Bedingungen), Einordnung als substanzielles Recht oder Schutzrecht, Status (belegt, ungeklärt, fehlt, widersprüchlich).
+3. Erfasse gesondert: Bestellung, Abberufung und Ersatzbesetzung von Organen und Geschäftsführung, Stichentscheide, Optionen und andere potenzielle Stimmrechte, Rechte aus weiteren Verträgen.
+4. Gewichte die Rechte nach ihrer Bedeutung für die Rendite, statt sie zu zählen.
+5. Leite eine vorläufige Einordnung ab: Beherrschung, gemeinsame Beherrschung, maßgeblicher Einfluss oder keines davon. Nenne die Annahmen und die Nachweise, die für eine abschließende Beurteilung fehlen.
+
+Regeln:
+- Stelle nur Rechte als vorhanden dar, die im Dokument stehen, und belege sie mit wörtlichem Zitat. Findest du eine Regel nicht, schreibe „nicht gefunden“.
+- Trenne vorhandene Rechte strikt von Empfehlungen.
+- Unterscheide zwischen dem Bestehen eines Rechts und seiner tatsächlichen Ausübung.
+- Nenne Paragraphen von IFRS 10 nur, wenn du dir ihres Inhalts sicher bist, und kennzeichne Unsicherheit.</pre>
+    </figure>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Term Sheet prüfen und gestalten</span><button class="copy" type="button" data-copy="p-termsheet">Kopieren</button></figcaption>
+<pre id="p-termsheet">Ziel: [Käuferin] soll ab [Stichtag oder auslösendes Ereignis] Beherrschung nach IFRS 10 über [Gesellschaft] erlangen, obwohl sie bis [Zeitpunkt] nur [x] % der Anteile hält.
+
+Prüfe ausschließlich die beigefügte Fassung [Versionsbezeichnung] des Term Sheets.
+1. Stelle vorhandene Rechte, vorgeschlagene Ergänzungen und fehlende Informationen in getrennten Spalten dar. Belege jede Aussage zum vorhandenen Inhalt mit wörtlichem Textanker.
+2. Prüfe gemeinsam: Entscheidungskataloge und ihre Überschneidungen, Bestellung, Abberufung und Ersatzbesetzung, Quorum und Einberufung, Nichtteilnahme, Geschäftsordnung, Wirksamkeitszeitpunkt und Bedingungen sowie alle Verweise auf Anlagen, Paragraphen und definierte Begriffe.
+3. Spiele mindestens drei Blockadesituationen vor und nach dem Stichtag durch, zum Beispiel Streit im Board, Abwesenheit eines Mitglieds und eine nicht rechtzeitige Bestellung.
+4. Prüfe, ob die Struktur vor dem Stichtag zu gemeinsamer Beherrschung oder maßgeblichem Einfluss führt und ob Rechte schon vor dem Stichtag substanziell sein könnten.
+5. Leite eine vorläufige IFRS-10-Würdigung ab und benenne die rechtlichen und tatsächlichen Nachweise, die für eine abschließende Schlussfolgerung fehlen.
+6. Schlage erst danach Formulierungen vor, jeweils mit der Lücke, die sie schließen sollen.
+
+Kennzeichne meine eigenen Vorgaben, zum Beispiel [Höchstzahl der Entscheidungen im Katalog], als Vorgaben und nicht als Anforderungen des Standards. Eine Formulierung wie „Regeln werden später geändert“ ist keine wirksame Regel.</pre>
+    </figure>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Fassungen vergleichen</span><button class="copy" type="button" data-copy="p-version">Kopieren</button></figcaption>
+<pre id="p-version">Vergleiche die Fassungen [A, Datum] und [B, Datum]. Liste jede inhaltliche Änderung mit der Fundstelle in beiden Fassungen auf.
+
+Aktualisiere danach die Rechte-Matrix aus der vorherigen Analyse:
+- Welche Lücke ist geschlossen?
+- Welche neue Wechselwirkung oder Überschneidung ist entstanden?
+- Welche frühere Schlussfolgerung beruhte auf einer überholten Fassung?
+
+Übernimm keine Aussage aus der früheren Analyse ungeprüft. Prüfe jede Fundstelle erneut in Fassung [B].</pre>
+    </figure>
+    <figure class="prompt">
+      <figcaption class="prompt-bar"><span>Frühere Beurteilung prüfen</span><button class="copy" type="button" data-copy="p-memo">Kopieren</button></figcaption>
+<pre id="p-memo">Prüfe jede Tatsachenbehauptung im beigefügten [Memo oder Schreiben vom Datum] gegen die beigefügten aktuellen Verträge.
+
+Lege eine Tabelle an mit den Spalten: Aussage im Dokument, vereinbartes Recht laut Vertrag mit wörtlichem Zitat, betroffene Gesellschaft, daraus gezogene Schlussfolgerung, Status (bestätigt, eingeschränkt, widersprüchlich, nicht nachweisbar).
+
+Behandle das ältere Dokument als Prüfgegenstand, nicht als Quelle. Dass eine Aussage früher verwendet wurde, belegt sie nicht.</pre>
+    </figure>
+  </section>
+
+  <section id="risiken" aria-labelledby="h-risiken">
+    <h2 id="h-risiken"><span class="h-no">07</span>Worauf Sie achten sollten</h2>
+    <p class="note"><strong>Aus der Praxis: die Fundstelle, die es nicht gab.</strong> Bei der Prüfung eines Term Sheets verwies die KI auf eine Regel zur Bestellung der Boardmitglieder. Im Dokument war sie nicht zu finden. Die Beschreibung war plausibel, sie stand nur nicht im Vertrag. Erst die Rückfrage und der erneute Abgleich mit dem Original brachten die Analyse wieder auf festen Boden. Der fachliche Fortschritt entstand an dieser Stelle durch die kritische Nachfrage, nicht durch die erste Antwort.</p>
+    <ul class="docs">
+      <li><strong>Wunsch und Vertragstext verwechseln.</strong> Die KI kann eine empfohlene oder vermutete Klausel als vorhandenen Vertragsinhalt darstellen. Das ist bei IFRS 10 der gefährlichste Fehler, weil die Schlussfolgerung dann auf einem Recht beruht, das es nicht gibt.</li>
+      <li><strong>Absichtserklärungen für wirksame Regeln halten.</strong> „Die Geschäftsordnung wird angepasst“ ist ein Auftrag für die Zukunft, kein Recht am Stichtag.</li>
+      <li><strong>Zählen statt gewichten.</strong> Die Zahl der Sitze oder Zustimmungsvorbehalte sagt wenig. Maßgeblich ist, wer über die Tätigkeiten entscheidet, die die Rendite bestimmen.</li>
+      <li><strong>Recht und Ausübung vermischen.</strong> Dass ein Nominierungsrecht für die Geschäftsführung zunächst nicht genutzt wird, beantwortet nicht die Frage, ob es besteht und durchsetzbar ist. Umgekehrt ist ein Vorschlagsrecht noch kein Bestellungsrecht.</li>
+      <li><strong>Fragestellungen vermischen.</strong> Prinzipal und Agent nach IFRS 10 (B58–B72) ist eine andere Frage als Prinzipal und Agent bei der Umsatzrealisierung nach IFRS 15. Beides gehört in getrennte Analysen.</li>
+      <li><strong>Eigene Vorgaben als Anforderungen des Standards ausgeben.</strong> Wer der KI etwa eine Höchstzahl von Entscheidungen für einen Katalog vorgibt, sollte darauf achten, dass diese Vorgabe später nicht als Kriterium von IFRS 10 erscheint.</li>
+      <li><strong>Falsche Paragraphen.</strong> KI zitiert Standards gelegentlich mit falscher Randziffer oder mit sinngemäß veränderten Inhalten. Jede zitierte Stelle gehört gegen den Originaltext geprüft.</li>
+      <li><strong>Vertraulichkeit.</strong> Term Sheets und Gesellschaftervereinbarungen zu geplanten Erwerben sind hoch vertraulich und oft Insiderinformationen. Sie gehören nur in Werkzeuge, die Ihr Unternehmen dafür freigegeben hat.</li>
+      <li><strong>Scheinsicherheit durch gute Sprache.</strong> Ein sprachlich überzeugender Klauselvorschlag garantiert weder rechtliche Durchsetzbarkeit noch Beherrschung.</li>
+    </ul>
+  </section>
+
+  <section id="kontrollen" aria-labelledby="h-kontrollen">
+    <h2 id="h-kontrollen"><span class="h-no">08</span>Kontrollen, die sich bewähren</h2>
+    <ol class="steps">
+      <li>
+        <h3>Textanker für jede Aussage</h3>
+        <p>Jede Aussage über ein vorhandenes Recht braucht ein wörtliches Zitat mit Fundstelle, das im Original nachgeprüft wird. Ein Seitenverweis ohne prüfbaren Text gilt nicht als erledigt, und „nicht gefunden“ ist ein zulässiges, oft wertvolles Ergebnis.</p>
+      </li>
+      <li>
+        <h3>Vier Felder statt einer Zusammenfassung</h3>
+        <p>Die Arbeitstabelle trennt vorhandenen Originaltext, daraus abgeleitete Aussage, gewünschte Ergänzung und offene Rechtsfrage. So bleibt sichtbar, was belegt ist und was erst geschaffen werden soll.</p>
+      </li>
+      <li>
+        <h3>Saubere Versionen</h3>
+        <p>Analysiert wird immer eine unveränderte, klar bezeichnete Fassung. Nach jeder Änderung wird die Matrix aktualisiert, und Ergebnisse aus verschiedenen Fassungen werden nicht vermischt. Jeder Verweis auf Anlagen, Paragraphen und definierte Begriffe wird gegen die aktuelle Fassung geprüft.</p>
+      </li>
+      <li>
+        <h3>Szenarien statt Lesart</h3>
+        <p>Jede Rechteverteilung wird an konkreten Situationen getestet: Patt, Abwesenheit, verweigerte Mitwirkung, nicht rechtzeitige Bestellung, vor und nach dem Stichtag. Ein Stichentscheid ist wertlos, wenn die Gegenseite jede beschlussfähige Sitzung verhindern kann.</p>
+      </li>
+      <li>
+        <h3>Gegenposition einholen</h3>
+        <p>In einer getrennten Sitzung bekommt die KI den Auftrag, gegen das bisherige Ergebnis zu argumentieren: Warum liegt keine Beherrschung vor, oder warum liegt sie schon früher vor? Was dort überzeugt, gehört in die Würdigung. Bei wesentlichen Fällen ersetzt das nicht die Durchsicht durch eine zweite Person.</p>
+      </li>
+      <li>
+        <h3>Rechtliche Prüfung einbinden</h3>
+        <p>Wirksamkeit, gesellschaftsrechtliche Umsetzung und Fusionskontrolle prüft die Rechtsabteilung oder eine Kanzlei. Eine eigene Spalte in der Matrix hält fest, welche Punkte noch juristisch zu klären sind.</p>
+      </li>
+      <li>
+        <h3>Ergebnisstatus und Prüfspur</h3>
+        <p>Analyse, Entwurf und Entscheidung sind drei verschiedene Ergebnisse und werden auch so bezeichnet. Prompts, geprüfte Fassungen, Ergebnisse, eigene Korrekturen und die finale Würdigung werden abgelegt. Das macht die Beurteilung für den Abschlussprüfer nachvollziehbar, und frühzeitig mit ihm abgestimmt erspart sie Überraschungen.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="close" aria-label="Fazit">
+    <p>Bei IFRS 10 spart KI vor allem Zeit beim Lesen, Ordnen und Vergleichen und findet Lücken, die beim ersten Durchgang leicht übersehen werden. Die Qualität entsteht aber erst durch die Kontrolle: durch Textanker, saubere Versionen, durchgespielte Szenarien und eine Würdigung, die bei Ihnen bleibt.</p>
+    <p>Fragen und eigene Erfahrungen nehme ich gern unter <a href="mailto:{{MAIL}}">{{MAIL}}</a> entgegen.</p>
+  </section>
+</article>
+
+<nav class="index" aria-labelledby="ix-weitere">
+  <h2 class="index-h" id="ix-weitere">Weitere Analysen</h2>
+  <ul class="index-list">
+    <li><a class="index-link" href="/analysen/m-und-a"><span class="index-name">M&amp;A</span><span class="index-desc">Kaufpreisallokation, Goodwill und Erstkonsolidierung.</span>{{SOON_INLINE}}</a></li>
+  </ul>
+</nav>

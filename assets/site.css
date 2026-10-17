@@ -410,6 +410,18 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .article .src + p { margin-top: 26px; }
 .std { display: block; margin-top: 6px; font-size: 13px; letter-spacing: .01em; color: var(--pencil); font-variant-numeric: tabular-nums; }
 
+.matrix { width: min(920px, calc(100vw - 44px)); margin: 26px 0 30px; position: relative; left: 50%; transform: translateX(-50%); }
+.matrix-scroll { overflow-x: auto; border-radius: 16px; background: var(--graphite); }
+.matrix table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 14px; line-height: 1.45; }
+.matrix th { padding: 14px 14px 10px; text-align: left; font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--pencil); border-bottom: 1px solid var(--graphite-2); }
+.matrix td { padding: 12px 14px; vertical-align: top; color: #e4e2dc; border-bottom: 1px solid var(--graphite-2); }
+.matrix tr:last-child td { border-bottom: 0; }
+.matrix figcaption { margin-top: 10px; font-size: 13px; color: var(--pencil); }
+.tag { display: inline-block; padding: 2px 9px; border-radius: 980px; font-size: 12px; white-space: nowrap; box-shadow: inset 0 0 0 1px var(--lead); color: var(--paper); }
+.tag-open { box-shadow: inset 0 0 0 1px var(--pencil); color: var(--pencil); }
+.tag-warn { background: var(--paper); color: var(--black); box-shadow: none; }
+.index.index-top { padding-top: 0; }
+
 .docs { margin: 0 0 1em; padding: 0; list-style: none; }
 .docs li { position: relative; padding: 0 0 0 22px; margin: 0 0 14px; }
 .docs li::before { content: ""; position: absolute; left: 2px; top: .72em; width: 9px; height: 1px; background: var(--paper); opacity: .6; }
